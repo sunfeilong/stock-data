@@ -1,0 +1,13 @@
+configs: 231
+#  - stockExchange: "SH"
+#    companyInfoUrl: ""
+#    stockInfoUrl: ""
+#    realTimeInfoUrl: ""
+#  - stockExchange: "SZ"
+#    companyInfoUrl: "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1110x&TABKEY=tab1&PAGENO=2&random=0.23552698013187512"
+#    stockInfoUrl: "http://www.szse.cn/api/market/ssjjhq/getTimeData?random=0.20171192356322387&marketId=1&code=000001"
+#    realTimeInfoUrl: ""
+#  - stockExchange: "HK"
+#    companyInfoUrl: ""
+#    stockInfoUrl: ""
+#    realTimeInfoUrl: ""
