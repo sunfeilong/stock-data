@@ -5,7 +5,10 @@ import (
     "gopkg.in/yaml.v2"
     "io/ioutil"
     "log"
+    "sync"
 )
+
+var mu sync.Mutex
 
 //配置文件名字
 const fileName string = "../configs.yml"
@@ -41,9 +44,15 @@ func (yamlConfig YamlConfig) getConfig(sc enums.StockExchange) (Config, error) {
         log.Println("配置文件信息已经加载,配置信息: ", configMap)
         return configMap[sc], nil
     }
+    mu.Lock()
+    if configMap != nil {
+        log.Println("配置文件信息已经加载,配置信息: ", configMap)
+        return configMap[sc], nil
+    }
     log.Println("配置文件信息不存在,加载配置信息开始")
     err := yamlConfig.loadConfig()
     log.Println("配置文件信息不存在,加载配置信息结束. 配置信息: ", configMap)
+    mu.Unlock()
     if nil != err {
         log.Fatal("加载配置文件出错,fileName: ", fileName, ", error info: ", err.Error())
         return *new(Config), err
