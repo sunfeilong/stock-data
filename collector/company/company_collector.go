@@ -1,4 +1,4 @@
-package main
+package company
 
 import "../../data"
 import "../../enums"

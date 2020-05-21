@@ -4,11 +4,11 @@ import "../enums"
 
 //股票公司
 type Company struct {
-    stockExchange enums.StockExchange
-    code          string
-    plate         string
-    shortName     string
-    fullName      string
-    industryCode  string
-    industryName  string
+    StockExchange enums.StockExchange
+    Code          string
+    Plate         string
+    ShortName     string
+    FullName      string
+    IndustryCode  string
+    IndustryName  string
 }

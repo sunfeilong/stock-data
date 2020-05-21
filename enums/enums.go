@@ -1,6 +1,6 @@
 package enums
 
 type enum interface {
-    codeToName(code string) string
-    nameToCode(name string) string
+    CodeToName(code string) string
+    NameToCode(name string) string
 }
