@@ -74,12 +74,8 @@ func (yamlConfig YamlConfig) loadConfig() error {
         log.Fatal("解析配置文件出错,fileName: ", fileName, ", error info: ", eil.Error())
         return eil
     }
-    cs := configs.Configs
     for _, config := range configs.Configs {
         configMap[config.StockExchangeCode] = config
-    }
-    for i := range cs {
-        configMap[cs[i].StockExchangeCode] = cs[i]
     }
     return nil
 }
