@@ -1,7 +1,7 @@
 configs:
   - stockexchange: "SZ"
     stockexchangecode: 100
-    companyinfourl: "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1110x&TABKEY=tab1&PAGENO=2&random=0.23552698013187512"
+    companyinfourl: "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1110x"
     stockinfourl: "http://www.szse.cn/api/market/ssjjhq/getTimeData?random=0.20171192356322387&marketId=1&code=000001"
     realtimeinfourl: ""
   - stockexchange: "SH"

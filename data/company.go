@@ -6,6 +6,7 @@ import "../enums"
 type Company struct {
     stockExchange enums.StockExchange
     code          string
+    plate         string
     shortName     string
     fullName      string
     industryCode  string

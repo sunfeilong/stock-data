@@ -1,4 +1,4 @@
-package company
+package main
 
 import "fmt"
 
