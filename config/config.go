@@ -75,7 +75,9 @@ func (yamlConfig YamlConfig) loadConfig() error {
         return eil
     }
     cs := configs.Configs
-
+    for _, config := range configs.Configs {
+        configMap[config.StockExchangeCode] = config
+    }
     for i := range cs {
         configMap[cs[i].StockExchangeCode] = cs[i]
     }
