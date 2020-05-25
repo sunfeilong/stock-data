@@ -1,6 +1,6 @@
 package enums
 
-type StockExchange int32
+type StockExchange int
 
 const (
     SZ StockExchange = 100
