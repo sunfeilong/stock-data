@@ -2,9 +2,18 @@ package main
 
 import (
     "fmt"
+    "log"
+    "os"
 )
 
+var logger *log.Logger
+
+func init() {
+    logger = log.New(os.Stdout, "[main] ", log.Llongfile|log.LstdFlags)
+}
+
 func main() {
+    logger.Println("项目启动")
 
     fmt.Println("start ...")
     first := make(chan bool, 1)
@@ -30,4 +39,6 @@ func main() {
 
     <-third
     fmt.Println("end ...")
+
+    logger.Println("项目运行结束")
 }

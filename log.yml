@@ -1,0 +1,20 @@
+level: "debug"
+development: false
+encoding: "json"
+outputPaths: ["stdout", "log-info.log"]
+errorOutputPaths: ["stdout","log-error.log"]
+disableStacktrace: false
+disableCaller: false
+initialFields:
+  "flag": "flag"
+encoderConfig:
+  messageKey: "message"
+  levelKey: "level"
+  levelEncoder: "lowercase"
+
+
+
+
+
+
+
