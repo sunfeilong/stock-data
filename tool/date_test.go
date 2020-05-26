@@ -6,7 +6,11 @@ import (
     time2 "time"
 )
 
-var dateTime = "2006-01-02 15:04:05"
+const (
+    dateTimeStr = "2006-01-02 15:04:05"
+    dateStr     = "2006-01-02"
+    timeStr     = "15:04:05"
+)
 
 func TestNowDateTime(t *testing.T) {
     time := NowDateTime()
@@ -27,7 +31,7 @@ func TestNowTime(t *testing.T) {
 }
 
 func TestParseNowDateTime(t *testing.T) {
-    time := ParseDateTime("2016-01-02 15:04:05")
+    time := ParseDateTime(dateTimeStr)
     assert.NotEmpty(t, time)
     date, month, day := time.Date()
     clock, min, sec := time.Clock()
@@ -40,7 +44,7 @@ func TestParseNowDateTime(t *testing.T) {
 }
 
 func TestParseNowDate(t *testing.T) {
-    time := ParseDate("2016-01-02")
+    time := ParseDate(dateStr)
     assert.NotEmpty(t, time)
     date, month, day := time.Date()
     assert.Equal(t, date, 2016)
@@ -49,7 +53,7 @@ func TestParseNowDate(t *testing.T) {
 }
 
 func TestParseNowTime(t *testing.T) {
-    time := ParseTime("15:04:05")
+    time := ParseTime(timeStr)
     assert.NotEmpty(t, time)
     clock, min, sec := time.Clock()
     assert.Equal(t, 15, clock)
