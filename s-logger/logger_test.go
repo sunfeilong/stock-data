@@ -7,8 +7,9 @@ import (
 
 func TestName(t *testing.T) {
     logger := New()
-    logger.Info("test")
-    logger.Error("error")
+
+    logger.Info("Info")
+    logger.Error("Error")
     defer logger.Sync()
     assert.NotEmpty(t, logger, "日志信息不能为空")
 }

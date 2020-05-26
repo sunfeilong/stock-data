@@ -4,10 +4,12 @@ import (
     "../tool"
     "go.uber.org/zap"
     "go.uber.org/zap/zapcore"
+    "gopkg.in/natefinch/lumberjack.v2"
     "gopkg.in/yaml.v2"
     "io/ioutil"
     "log"
     "os"
+    "time"
 )
 
 var zapC zap.Config
@@ -28,31 +30,58 @@ func init() {
     zapC = *zapConfig
 }
 
+func NewEncoderConfig() zapcore.EncoderConfig {
+    return zapcore.EncoderConfig{
+        // Keys can be anything except the empty string.
+        TimeKey:        "T",
+        LevelKey:       "L",
+        NameKey:        "N",
+        CallerKey:      "C",
+        MessageKey:     "M",
+        StacktraceKey:  "S",
+        LineEnding:     zapcore.DefaultLineEnding,
+        EncodeLevel:    zapcore.CapitalLevelEncoder,
+        EncodeTime:     TimeEncoder,
+        EncodeDuration: zapcore.StringDurationEncoder,
+        EncodeCaller:   zapcore.ShortCallerEncoder,
+    }
+}
+
 func New() *zap.SugaredLogger {
     //logger, err := zapC.Build()
-    highPriority := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
+
+    GTEError := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
         return lvl >= zapcore.ErrorLevel
     })
 
-    lowPriority := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
-        return lvl <= zapcore.ErrorLevel
+    GETDebug := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
+        return lvl > zapcore.DebugLevel
     })
 
-    infoFile, _ := os.OpenFile(zapC.OutputPaths[1], os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-    errorFile, _ := os.OpenFile(zapC.ErrorOutputPaths[1], os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-    infoOutput := zapcore.AddSync(infoFile)
-    errorOutput := zapcore.AddSync(errorFile)
+    infoOutput := zapcore.AddSync(&lumberjack.Logger{
+        Filename:   zapC.OutputPaths[1],
+        MaxSize:    1, // megabytes
+        MaxBackups: 3,
+        MaxAge:     28, // days
+    })
+
+    errorOutput := zapcore.AddSync(&lumberjack.Logger{
+        Filename:   zapC.ErrorOutputPaths[1],
+        MaxSize:    1, // megabytes
+        MaxBackups: 3,
+        MaxAge:     28, // days
+    })
 
     console := zapcore.Lock(os.Stdout)
 
     prodEncoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())
-    devEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
+    devEncoder := zapcore.NewConsoleEncoder(NewEncoderConfig())
 
     core := zapcore.NewTee(
-        zapcore.NewCore(devEncoder, console, lowPriority),
+        zapcore.NewCore(devEncoder, console, GETDebug),
 
-        zapcore.NewCore(prodEncoder, infoOutput, lowPriority),
-        zapcore.NewCore(prodEncoder, errorOutput, highPriority),
+        zapcore.NewCore(prodEncoder, infoOutput, GETDebug),
+        zapcore.NewCore(prodEncoder, errorOutput, GTEError),
     )
     logger := zap.New(core)
     return logger.Sugar()
@@ -78,4 +107,8 @@ func ReadZapConfig() (*zap.Config, error) {
         return &config, eil
     }
     return &config, nil
+}
+
+func TimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+    enc.AppendString(t.Format("2006-01-02 15:04:05.000"))
 }
