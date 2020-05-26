@@ -3,9 +3,11 @@ package s_logger
 import (
     "../tool"
     "go.uber.org/zap"
+    "go.uber.org/zap/zapcore"
     "gopkg.in/yaml.v2"
     "io/ioutil"
     "log"
+    "os"
 )
 
 var zapC zap.Config
@@ -27,10 +29,32 @@ func init() {
 }
 
 func New() *zap.SugaredLogger {
-    logger, err := zapC.Build()
-    if nil != err {
-        panic(err)
-    }
+    //logger, err := zapC.Build()
+    highPriority := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
+        return lvl >= zapcore.ErrorLevel
+    })
+
+    lowPriority := zap.LevelEnablerFunc(func(lvl zapcore.Level) bool {
+        return lvl <= zapcore.ErrorLevel
+    })
+
+    infoFile, _ := os.OpenFile(zapC.OutputPaths[1], os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+    errorFile, _ := os.OpenFile(zapC.ErrorOutputPaths[1], os.O_CREATE|os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+    infoOutput := zapcore.AddSync(infoFile)
+    errorOutput := zapcore.AddSync(errorFile)
+
+    console := zapcore.Lock(os.Stdout)
+
+    prodEncoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())
+    devEncoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
+
+    core := zapcore.NewTee(
+        zapcore.NewCore(devEncoder, console, lowPriority),
+
+        zapcore.NewCore(prodEncoder, infoOutput, lowPriority),
+        zapcore.NewCore(prodEncoder, errorOutput, highPriority),
+    )
+    logger := zap.New(core)
     return logger.Sugar()
 }
 
