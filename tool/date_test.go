@@ -35,7 +35,7 @@ func TestParseNowDateTime(t *testing.T) {
     assert.NotEmpty(t, time)
     date, month, day := time.Date()
     clock, min, sec := time.Clock()
-    assert.Equal(t, date, 2016)
+    assert.Equal(t, date, 2006)
     assert.Equal(t, time2.January, month)
     assert.Equal(t, 2, day)
     assert.Equal(t, 15, clock)
@@ -47,7 +47,7 @@ func TestParseNowDate(t *testing.T) {
     time := ParseDate(dateStr)
     assert.NotEmpty(t, time)
     date, month, day := time.Date()
-    assert.Equal(t, date, 2016)
+    assert.Equal(t, date, 2006)
     assert.Equal(t, time2.January, month)
     assert.Equal(t, 2, day)
 }
