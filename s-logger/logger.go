@@ -54,11 +54,11 @@ func New() *zap.SugaredLogger {
 
     core := zapcore.NewTee(
         zapcore.NewCore(devEncoder, console, GETDebug),
-        zapcore.NewCore(prodEncoder, infoOutput, GETDebug),
 
+        zapcore.NewCore(prodEncoder, infoOutput, GETDebug),
         zapcore.NewCore(prodEncoder, errorOutput, GTEError),
     )
-    logger := zap.New(core)
+    logger := zap.New(core, zap.AddCaller())
     return logger.Sugar()
 }
 

@@ -60,7 +60,7 @@ func (c CompanyFilePreserver) read() ([]model.Company, error) {
 }
 
 func (c CompanyFilePreserver) getFullFileName(append string) string {
-    return c.getPrefix() + "-" + append + c.getSuffix()
+    return c.getPrefix() + append + c.getSuffix()
 }
 
 func (c CompanyFilePreserver) getPrefix() string {
