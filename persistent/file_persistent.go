@@ -1,7 +1,7 @@
 package persistent
 
 import (
-    "../data"
+    "../model"
     "../errors"
     "encoding/json"
     "io/ioutil"
@@ -15,7 +15,7 @@ const pathName string = "storage/"
 type CompanyFilePersistent struct {
 }
 
-func (c CompanyFilePersistent) save(data []data.Company) error {
+func (c CompanyFilePersistent) save(data []model.Company) error {
     path, err := getConfigFilePath(pathName, maxLevel)
     if nil != err {
         log.Fatal("保存数据到文件，未找到配置路径: ", pathName)
@@ -34,7 +34,7 @@ func (c CompanyFilePersistent) save(data []data.Company) error {
     return nil
 }
 
-func (c CompanyFilePersistent) read() []data.Company {
+func (c CompanyFilePersistent) read() []model.Company {
     path, err := getConfigFilePath(pathName, maxLevel)
     if nil != err {
         log.Fatal("从文件读取数据，未找到配置路径: ", pathName)
@@ -44,7 +44,7 @@ func (c CompanyFilePersistent) read() []data.Company {
         log.Fatal("从文件读取数据，读取数据异常: ", pathName)
     }
 
-    d := &[]data.Company{}
+    d := &[]model.Company{}
     err = json.Unmarshal(file, &d)
     if nil != err {
         log.Fatal("从文件读取数据,解析数据异常: ", pathName)

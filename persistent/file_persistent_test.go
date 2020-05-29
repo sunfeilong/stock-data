@@ -1,15 +1,15 @@
 package persistent
 
 import (
-    "../data"
+    "../model"
     "github.com/stretchr/testify/assert"
     "testing"
 )
 
 func TestName(t *testing.T) {
-    d := []data.Company{}
-    d = append(d, data.Company{Code: "1"})
-    d = append(d, data.Company{Code: "2"})
+    d := []model.Company{}
+    d = append(d, model.Company{Code: "1"})
+    d = append(d, model.Company{Code: "2"})
 
     cfp := CompanyFilePersistent{}
 

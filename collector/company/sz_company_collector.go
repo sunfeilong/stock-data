@@ -2,8 +2,8 @@ package company
 
 import (
     "../../config"
-    "../../data"
     "../../enums"
+    "../../model"
     "encoding/json"
     "io/ioutil"
     "log"
@@ -37,8 +37,8 @@ func (sz SZCompanyCollector) getStockExchange() int {
     return enums.SZ
 }
 
-func (sz SZCompanyCollector) fetchAll(conf config.StockConfig) []data.Company {
-    result := make([]data.Company, 0)
+func (sz SZCompanyCollector) fetchAll(conf config.StockConfig) []model.Company {
+    result := make([]model.Company, 0)
     allPlate := enums.GetAll()
     for _, plate := range allPlate {
         plateData := getPlateData(conf, plate)
@@ -48,8 +48,8 @@ func (sz SZCompanyCollector) fetchAll(conf config.StockConfig) []data.Company {
 }
 
 //获取每个板块的数据
-func getPlateData(conf config.StockConfig, plate enums.PlateEnum) []data.Company {
-    result := make([]data.Company, 0)
+func getPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+    result := make([]model.Company, 0)
     page := 1
     for pageData := readPageData(conf, page, plate); pageData != nil; {
         result = append(result, pageData...)
@@ -60,7 +60,7 @@ func getPlateData(conf config.StockConfig, plate enums.PlateEnum) []data.Company
 }
 
 //读取每页的数据
-func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []data.Company {
+func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []model.Company {
     requestUrl := conf.CompanyInfoUrl + "&TABKEY=" + plate.Tab + "&random=" + strconv.Itoa(rand.Int()) + "&PAGENO=" + strconv.Itoa(page)
     log.Println("获取公司列表.交易所:", plate.StockExchange, ",板块", plate.Tab, "完整URL:%v", requestUrl)
     response, err := http.Get(requestUrl)
@@ -89,11 +89,11 @@ func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []da
     return responseToCompanyMapper(r, plate)
 }
 
-func responseToCompanyMapper(response Response, plate enums.PlateEnum) []data.Company {
-    result := make([]data.Company, 0)
+func responseToCompanyMapper(response Response, plate enums.PlateEnum) []model.Company {
+    result := make([]model.Company, 0)
     for _, d := range response.Data {
         split := strings.Split(d.IndustryCodeAndName, " ")
-        company := data.Company{
+        company := model.Company{
             StockExchange: plate.StockExchange,
             Code:          d.StockCode,
             Plate:         plate.Code,

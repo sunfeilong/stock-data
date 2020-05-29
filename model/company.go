@@ -1,4 +1,4 @@
-package data
+package model
 
 //股票公司
 type Company struct {

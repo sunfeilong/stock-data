@@ -1,9 +1,9 @@
 package persistent
 
-import "../data"
+import "../model"
 
 //持久接口
 type Persistent interface {
-    save(data []data.Company) error
-    read() ([]data.Company, error)
+    save(data []model.Company) error
+    read() ([]model.Company, error)
 }
