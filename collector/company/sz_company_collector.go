@@ -33,11 +33,11 @@ type ResponseData struct {
     StockCode           string `json:"zqdm"`
 }
 
-func (sz SZCompanyCollector) getStockExchange() enums.StockExchange {
+func (sz SZCompanyCollector) getStockExchange() int {
     return enums.SZ
 }
 
-func (sz SZCompanyCollector) fetchAll(conf config.Config) []data.Company {
+func (sz SZCompanyCollector) fetchAll(conf config.StockConfig) []data.Company {
     result := make([]data.Company, 0)
     allPlate := enums.GetAll()
     for _, plate := range allPlate {
@@ -48,7 +48,7 @@ func (sz SZCompanyCollector) fetchAll(conf config.Config) []data.Company {
 }
 
 //获取每个板块的数据
-func getPlateData(conf config.Config, plate enums.PlateEnum) []data.Company {
+func getPlateData(conf config.StockConfig, plate enums.PlateEnum) []data.Company {
     result := make([]data.Company, 0)
     page := 1
     for pageData := readPageData(conf, page, plate); pageData != nil; {
@@ -60,7 +60,7 @@ func getPlateData(conf config.Config, plate enums.PlateEnum) []data.Company {
 }
 
 //读取每页的数据
-func readPageData(conf config.Config, page int, plate enums.PlateEnum) []data.Company {
+func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []data.Company {
     requestUrl := conf.CompanyInfoUrl + "&TABKEY=" + plate.Tab + "&random=" + strconv.Itoa(rand.Int()) + "&PAGENO=" + strconv.Itoa(page)
     log.Println("获取公司列表.交易所:", plate.StockExchange, ",板块", plate.Tab, "完整URL:%v", requestUrl)
     response, err := http.Get(requestUrl)

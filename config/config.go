@@ -19,6 +19,7 @@ func init() {
     projectViper.SetConfigType("yaml")
     projectViper.AddConfigPath(".")
     projectViper.AddConfigPath("../")
+    projectViper.AddConfigPath("../../")
     projectViper.SetConfigName(defaultConfigFileName)
     if err := projectViper.ReadInConfig(); nil != err {
         panic(err)

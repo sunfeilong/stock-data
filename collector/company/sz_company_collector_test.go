@@ -9,11 +9,9 @@ import (
 )
 
 func TestName(t *testing.T) {
-    configInfo := config.YamlConfig{}
     szCollector := SZCompanyCollector{}
 
-    getConfig, err := configInfo.GetConfig(enums.SZ)
-    assert.Nil(t, err, "")
+    getConfig := config.GetStockConfig(enums.SZ)
 
     companies := szCollector.fetchAll(getConfig)
     log.Println("数据: ", companies)
