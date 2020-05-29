@@ -1,71 +1,72 @@
 package persistent
 
 import (
-    "../model"
     "../errors"
+    "../model"
+    "../s-logger"
+    "../tool"
     "encoding/json"
     "io/ioutil"
-    "log"
     "os"
 )
 
-const maxLevel int = 10
-const pathName string = "storage/"
+const (
+    maxLevel int    = 10
+    pathName string = "storage/"
+)
 
-type CompanyFilePersistent struct {
-}
+var logger = s_logger.New()
 
-func (c CompanyFilePersistent) save(data []model.Company) error {
-    path, err := getConfigFilePath(pathName, maxLevel)
+type CompanyFilePreserver struct{}
+
+func (c CompanyFilePreserver) save(data []model.Company) error {
+    path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
-        log.Fatal("保存数据到文件，未找到配置路径: ", pathName)
-        return errors.StockDataError{}
+        logger.Infow("保存数据到文件,未找到配置路径", "pathName", pathName, "err", err)
+        return errors.StockDataError{Msg: "保存数据到文件,未找到配置路径"}
     }
     marshal, err := json.Marshal(data)
     if nil != err {
-        log.Fatal("保存数据到文件，数据格式化异常: ", pathName)
-        return errors.StockDataError{}
+        logger.Infow("保存数据到文件,数据格式化异常", "pathName", pathName, "err", err)
+        return errors.StockDataError{Msg: "保存数据到文件,数据格式化异常"}
     }
-    ioutil.WriteFile(path+getFileName(), marshal, os.ModeAppend)
+    err = ioutil.WriteFile(path+c.getFullFileName(tool.NowDate()), marshal, os.ModeAppend)
     if nil != err {
-        log.Fatal("寻找配置文件，未找到配置路径: ", pathName)
-        return errors.StockDataError{}
+        logger.Infow("保存数据到文件,写入文件数据异常", "pathName", pathName, "err", err)
+        return errors.StockDataError{Msg: "保存数据到文件,写入文件数据异常"}
     }
     return nil
 }
 
-func (c CompanyFilePersistent) read() []model.Company {
-    path, err := getConfigFilePath(pathName, maxLevel)
+func (c CompanyFilePreserver) read() ([]model.Company, error) {
+    path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
-        log.Fatal("从文件读取数据，未找到配置路径: ", pathName)
+        logger.Infow("从文件读取数据,未找到配置路径", "pathName", pathName, "err", err)
+        return nil, errors.StockDataError{Msg: "从文件读取数据,未找到配置路径"}
     }
-    file, err := ioutil.ReadFile(path + getFileName())
+    file, err := ioutil.ReadFile(path + c.getFullFileName(tool.NowDate()))
     if nil != err {
-        log.Fatal("从文件读取数据，读取数据异常: ", pathName)
+        logger.Infow("从文件读取数据,读取数据异常", "pathName", pathName, "err", err)
+        return nil, errors.StockDataError{Msg: "从文件读取数据,读取数据异常"}
     }
 
     d := &[]model.Company{}
     err = json.Unmarshal(file, &d)
     if nil != err {
-        log.Fatal("从文件读取数据,解析数据异常: ", pathName)
+        logger.Infow("从文件读取数据,解析数据异常", "pathName", pathName, "err", err)
+        return nil, errors.StockDataError{Msg: "从文件读取数据,读取数据异常"}
     }
-    return *d
+    return *d, nil
 }
 
-func getConfigFilePath(pathName string, level int) (string, error) {
-    log.Println("寻找配置文件，配置文件路径: ", pathName, " 向上遍历层级: ", maxLevel-level)
-    if level < 0 {
-        log.Fatal("寻找配置文件，配置文件路径: ", pathName)
-        return "", errors.StockDataError{"未找到配置文件"}
-    }
-    _, err := os.Open(pathName)
-    if nil == err {
-        return pathName, nil
-    } else {
-        return getConfigFilePath("../"+pathName, level-1)
-    }
+func (c CompanyFilePreserver) getFullFileName(append string) string {
+    return c.getPrefix() + "-" + append + c.getSuffix()
 }
 
-func getFileName() string {
-    return "company.json"
+func (c CompanyFilePreserver) getPrefix() string {
+    return "company-"
+}
+
+func (c CompanyFilePreserver) getSuffix() string {
+    return ".json"
 }
