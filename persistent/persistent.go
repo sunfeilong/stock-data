@@ -4,6 +4,6 @@ import "../model"
 
 //持久接口
 type Preserver interface {
-    save(data []model.Company) error
-    read() ([]model.Company, error)
+    Save(data []model.Company) error
+    Read() ([]model.Company, error)
 }

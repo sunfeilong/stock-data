@@ -19,13 +19,13 @@ var logger = s_logger.New()
 
 type CompanyFilePreserver struct{}
 
-func (c CompanyFilePreserver) save(data []model.Company) error {
+func (c CompanyFilePreserver) Save(data []model.Company) error {
     path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
         logger.Infow("保存数据到文件,未找到配置路径", "pathName", pathName, "err", err)
         return errors.StockDataError{Msg: "保存数据到文件,未找到配置路径"}
     }
-    marshal, err := json.Marshal(data)
+    marshal, err := json.MarshalIndent(data, "", "  ")
     if nil != err {
         logger.Infow("保存数据到文件,数据格式化异常", "pathName", pathName, "err", err)
         return errors.StockDataError{Msg: "保存数据到文件,数据格式化异常"}
@@ -38,7 +38,7 @@ func (c CompanyFilePreserver) save(data []model.Company) error {
     return nil
 }
 
-func (c CompanyFilePreserver) read() ([]model.Company, error) {
+func (c CompanyFilePreserver) Read() ([]model.Company, error) {
     path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
         logger.Infow("从文件读取数据,未找到配置路径", "pathName", pathName, "err", err)

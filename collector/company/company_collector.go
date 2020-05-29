@@ -5,7 +5,7 @@ import "../../config"
 
 type Collector interface {
     //获取收集器对应的交易所
-    getStockExchange() int
+    GetStockExchange() int
     //获取所有公司信息
-    fetchAll(config config.StockConfig) []model.Company
+    FetchAll(config config.StockConfig) []model.Company
 }

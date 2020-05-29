@@ -13,11 +13,11 @@ func TestName(t *testing.T) {
 
     cfp := CompanyFilePreserver{}
 
-    err := cfp.save(d)
+    err := cfp.Save(d)
 
     assert.Nil(t, err, "")
 
-    read, err := cfp.read()
+    read, err := cfp.Read()
     assert.Empty(t, err)
     assert.NotEmpty(t, read, "")
     assert.Equal(t, "1", read[0].Code)

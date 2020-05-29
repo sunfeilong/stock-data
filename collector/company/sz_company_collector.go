@@ -4,9 +4,9 @@ import (
     "../../config"
     "../../enums"
     "../../model"
+    "../../s-logger"
     "encoding/json"
     "io/ioutil"
-    "log"
     "math/rand"
     "net/http"
     "regexp"
@@ -15,6 +15,7 @@ import (
 )
 
 var simpleNameReg = regexp.MustCompile("(.*)<u>(.*)</u>(.*)")
+var logger = s_logger.New()
 
 //深圳交易所上市公司信息收集器
 type SZCompanyCollector struct {
@@ -33,22 +34,24 @@ type ResponseData struct {
     StockCode           string `json:"zqdm"`
 }
 
-func (sz SZCompanyCollector) getStockExchange() int {
+func (sz SZCompanyCollector) GetStockExchange() int {
     return enums.SZ
 }
 
-func (sz SZCompanyCollector) fetchAll(conf config.StockConfig) []model.Company {
+func (sz SZCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
+    logger.Infow("收集所有公司信息,开始.", "stockExchangeCode", sz.GetStockExchange(), "configInfo", conf)
     result := make([]model.Company, 0)
     allPlate := enums.GetAll()
     for _, plate := range allPlate {
-        plateData := getPlateData(conf, plate)
-        result = append(result, plateData...)
+        result = append(result, GetPlateData(conf, plate)...)
     }
+    logger.Infow("收集所有公司信息,结束.", "stockExchangeCode", sz.GetStockExchange(), "configInfo", conf, "length", len(result))
     return result
 }
 
 //获取每个板块的数据
-func getPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+func GetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+    logger.Infow("收集所有公司信息,收集指定板块信息,开始.", "stockExchangeCode", conf.StockExchangeCode, "plate", plate)
     result := make([]model.Company, 0)
     page := 1
     for pageData := readPageData(conf, page, plate); pageData != nil; {
@@ -56,37 +59,35 @@ func getPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Compan
         page = page + 1
         pageData = readPageData(conf, page, plate)
     }
+    logger.Infow("收集所有公司信息,收集指定板块信息,结束.", "stockExchangeCode", conf.StockExchangeCode, "plate", plate)
     return result
 }
 
 //读取每页的数据
 func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []model.Company {
     requestUrl := conf.CompanyInfoUrl + "&TABKEY=" + plate.Tab + "&random=" + strconv.Itoa(rand.Int()) + "&PAGENO=" + strconv.Itoa(page)
-    log.Println("获取公司列表.交易所:", plate.StockExchange, ",板块", plate.Tab, "完整URL:%v", requestUrl)
+    logger.Infow("获取公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)
     response, err := http.Get(requestUrl)
     if nil != err {
-        log.Fatal("获取公司列表数据异常,异常信息", err)
-    }
-    //log.Println("获取公司列表，响应信息: ", response)
-    responseDataByte, err := ioutil.ReadAll(response.Body)
-    if nil != err {
-        log.Fatal("读取公司列表数据异常,异常信息: ", err)
-    }
-    //log.Println("获取公司列表，响应数据:", string(responseDataByte))
-    responseDataPoint := &[]Response{}
-    err = json.Unmarshal(responseDataByte, &responseDataPoint)
-
-    var r Response
-    for index, d := range *responseDataPoint {
-        if index == plate.Index-1 {
-            r = d
-        }
-    }
-    if len(r.Data) == 0 {
+        logger.Errorw("获取公司列表数据异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
         return nil
     }
-    //log.Println("获取公司列表，响应数据", responseDataPoint)
-    return responseToCompanyMapper(r, plate)
+    responseDataByte, err := ioutil.ReadAll(response.Body)
+    if nil != err {
+        logger.Errorw("读取公司列表数据异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
+        return nil
+    }
+    responseDataPoint := &[]Response{}
+    err = json.Unmarshal(responseDataByte, &responseDataPoint)
+    if err != nil {
+        logger.Errorw("读取公司列表,解析数据出现异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
+        return nil
+    }
+
+    if r := (*responseDataPoint)[plate.Index-1]; len(r.Data) > 0 {
+        return responseToCompanyMapper(r, plate)
+    }
+    return nil
 }
 
 func responseToCompanyMapper(response Response, plate enums.PlateEnum) []model.Company {
@@ -104,7 +105,7 @@ func responseToCompanyMapper(response Response, plate enums.PlateEnum) []model.C
         }
         result = append(result, company)
     }
-    log.Println("数据量:", len(response.Data), "转换结果数量: ", len(result))
+    logger.Infow("数据转换", "length", len(response.Data), "resultLength", len(result))
     return result
 }
 
