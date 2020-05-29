@@ -1,8 +1,6 @@
 package config
 
 import (
-    "../enums"
-    "fmt"
     "github.com/spf13/viper"
 )
 
@@ -25,7 +23,6 @@ func init() {
     if err := projectViper.ReadInConfig(); nil != err {
         panic(err)
     }
-    fmt.Println(projectViper.Get("stock"))
     //股票信息配置
     var P *StockConfigs
     if err := projectViper.UnmarshalKey("stock", &P); nil != err {
@@ -36,6 +33,10 @@ func init() {
     }
 }
 
-func GetStockConfig(s enums.StockExchange) StockConfig {
+func GetStockConfig(s int) StockConfig {
     return stockConfigMap[int(s)]
+}
+
+func GetLogConfig() {
+
 }

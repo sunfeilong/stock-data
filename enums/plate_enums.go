@@ -1,7 +1,7 @@
 package enums
 
 type PlateEnum struct {
-    StockExchange StockExchange
+    StockExchange int
     Code          string
     Name          string
     Tab           string

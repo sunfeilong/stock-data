@@ -1,9 +1,7 @@
 package enums
 
-type StockExchange int
-
 const (
-    SZ StockExchange = 100
-    SH StockExchange = 130
-    HK StockExchange = 160
+    SZ int = 100
+    SH int = 130
+    HK int = 160
 )
