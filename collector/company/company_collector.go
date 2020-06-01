@@ -1,6 +1,8 @@
 package company
 
-import "../../model"
+import (
+    "../../model"
+)
 import "../../config"
 
 type Collector interface {

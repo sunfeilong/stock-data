@@ -35,7 +35,7 @@ func init() {
 }
 
 func GetStockConfig(s int) StockConfig {
-    return stockConfigMap[int(s)]
+    return stockConfigMap[s]
 }
 
 func GetLogConfig() {
