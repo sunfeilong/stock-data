@@ -33,7 +33,8 @@ func (e *ECenter) HandelEvent() {
             e.hasHandelEventCount = e.hasHandelEventCount + 1
             e.Unlock()
             logger.Infow("事件处理中心,获取到事件,开始处理.", "event", event, "ec", e)
-            if e.waitHandelEventCount == 0 {
+            if e.waitHandelEventCount == 0 && cap(e.finishedFlag) == 0 {
+                logger.Infow("事件处理中心,时间已经全部处理,设置完成标记.", "event", event, "ec", e)
                 e.finishedFlag <- true
             }
         }
