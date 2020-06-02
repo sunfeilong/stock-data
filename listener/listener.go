@@ -5,5 +5,5 @@ type Listener interface {
     GetId() string
     GetEventType() string
     String() string
-    Handle()
+    Notify()
 }

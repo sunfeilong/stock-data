@@ -14,12 +14,13 @@ import (
 var logger = s_logger.New()
 var collectorMap map[int]company.Collector = make(map[int]company.Collector)
 var preserver = persistent.CompanyFilePreserver{}
+var newListener = NewListener("001", listener.CollectCompanyInfoFinished)
 
 func init() {
     logger.Infow("初始化收集器容器")
     addToMap(company.SZCompanyCollector{})
     logger.Infow("向注册中心注册监听器")
-    event.RegisterListener(NewListener("id1", listener.CollectCompanyInfoFinished))
+    event.RegisterListener(newListener)
 }
 
 func addToMap(collector company.Collector) {
