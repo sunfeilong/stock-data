@@ -3,6 +3,8 @@ package collector
 import (
     "../config"
     "../enums"
+    "../event"
+    "../listener"
     "../model"
     "../persistent"
     "../s-logger"
@@ -16,6 +18,8 @@ var preserver = persistent.CompanyFilePreserver{}
 func init() {
     logger.Infow("初始化收集器容器")
     addToMap(company.SZCompanyCollector{})
+    logger.Infow("向注册中心注册监听器")
+    event.RegisterListener(NewListener("id1", listener.CollectCompanyInfoFinished))
 }
 
 func addToMap(collector company.Collector) {

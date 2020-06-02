@@ -4,10 +4,6 @@ import "fmt"
 
 type Code int
 
-const (
-    CollectCompanyInfoFinished Code = 1 + iota
-)
-
 //事件定义
 type Event interface {
     GetType() string          //获取时间类型
@@ -40,5 +36,6 @@ func (m EModel) GetMeteData() interface{} {
 }
 
 func (m EModel) String() string {
-    return fmt.Sprintf("type:%s, description:%s, metadata:%s", m.GetType(), m.GetDescription(), m.GetMeteData())
+    return fmt.Sprintf("type:%s, description:%s, metadata:%s",
+        m.GetType(), m.GetDescription(), m.GetMeteData())
 }
