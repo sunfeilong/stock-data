@@ -34,6 +34,10 @@ type ResponseData struct {
     StockCode           string `json:"zqdm"`
 }
 
+func (s SZCompanyCollector) String() string {
+    return "SZCompanyCollector"
+}
+
 func (sz SZCompanyCollector) GetStockExchange() int {
     return enums.SZ
 }

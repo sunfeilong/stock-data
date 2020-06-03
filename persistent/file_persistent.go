@@ -19,7 +19,7 @@ var logger = s_logger.New()
 
 type CompanyFilePreserver struct{}
 
-func (c CompanyFilePreserver) Save(data []model.Company) error {
+func (c CompanyFilePreserver) Save(data *[]model.Company) error {
     path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
         logger.Infow("保存数据到文件,未找到配置路径", "pathName", pathName, "err", err)
