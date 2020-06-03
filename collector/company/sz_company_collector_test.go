@@ -13,7 +13,7 @@ func TestName(t *testing.T) {
 
     getConfig := config.GetStockConfig(enums.SZ)
 
-    companies := szCollector.fetchAll(getConfig)
+    companies := szCollector.FetchAll(getConfig)
     log.Println("数据: ", companies)
     log.Println("数据长度: ", len(companies))
     assert.NotEmpty(t, companies, "")

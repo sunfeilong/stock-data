@@ -1,0 +1,30 @@
+package collector
+
+import (
+    "../config"
+    "../model"
+    "./data"
+)
+
+var dataCollectors map[int]data.Collector = make(map[int]data.Collector)
+
+func init() {
+    logger.Infow("初始化数据收集器容器")
+    addDataCollectorToMap(data.SZDataCollector{})
+}
+
+func addDataCollectorToMap(collector data.Collector) {
+    dataCollectors[collector.GetStockExchange()] = collector
+}
+
+func CollectData(company []model.Company) []model.Data {
+    logger.Infow("收集公司数据开始")
+    tempData := make([]model.Data, 0)
+    for key, collector := range dataCollectors {
+        logger.Infow("收集公司数据.", "stockCode", key, "collector", collector)
+        all := collector.FetchAll(company, config.GetStockConfig(collector.GetStockExchange()))
+        tempData = append(tempData, all...)
+    }
+    logger.Infow("收集公司数据结束")
+    return tempData
+}

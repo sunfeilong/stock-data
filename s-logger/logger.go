@@ -35,14 +35,14 @@ func New() *zap.SugaredLogger {
     })
 
     infoOutput := zapcore.AddSync(&lumberjack.Logger{
-        Filename:   "log-info.log",
+        Filename:   "d://log-info.log",
         MaxSize:    1,
         MaxBackups: 3,
         MaxAge:     28,
     })
 
     errorOutput := zapcore.AddSync(&lumberjack.Logger{
-        Filename:   "log-error.log",
+        Filename:   "d://log-error.log",
         MaxSize:    1,
         MaxBackups: 3,
         MaxAge:     28,

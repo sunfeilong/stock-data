@@ -38,7 +38,7 @@ func (s SZCompanyCollector) String() string {
     return "SZCompanyCollector"
 }
 
-func (sz SZCompanyCollector) GetStockExchange() int {
+func (s SZCompanyCollector) GetStockExchange() int {
     return enums.SZ
 }
 
