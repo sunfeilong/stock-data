@@ -3,8 +3,6 @@ package collector
 import (
     "../config"
     "../enums"
-    "../event"
-    "../listener"
     "../model"
     "../persistent"
     "../s-logger"
@@ -12,27 +10,24 @@ import (
 )
 
 var logger = s_logger.New()
-var collectorMap map[int]company.Collector = make(map[int]company.Collector)
+var collectors map[int]company.Collector = make(map[int]company.Collector)
 var preserver = persistent.CompanyFilePreserver{}
-var newListener = NewListener("001", listener.CollectCompanyInfoFinished)
 
 func init() {
     logger.Infow("初始化收集器容器")
     addToMap(company.SZCompanyCollector{})
-    logger.Infow("向注册中心注册监听器")
-    event.RegisterListener(newListener)
 }
 
 func addToMap(collector company.Collector) {
-    collectorMap[collector.GetStockExchange()] = collector
+    collectors[collector.GetStockExchange()] = collector
 }
 
-func CollectCompanyInfo() {
+func CollectCompanyInfo() *[]model.Company {
     logger.Infow("收集公司信息开始")
     plateEnums := enums.GetAll()
     tempData := make([]model.Company, 0)
     for _, p := range plateEnums {
-        collector := collectorMap[p.StockExchange]
+        collector := collectors[p.StockExchange]
         if nil != collector {
             all := collector.FetchAll(config.GetStockConfig(collector.GetStockExchange()))
             tempData = append(tempData, all...)
@@ -44,4 +39,5 @@ func CollectCompanyInfo() {
         logger.Errorw("收集公司信息,保存数据失败", "error", err)
     }
     logger.Infow("收集公司信息结束")
+    return &tempData
 }
