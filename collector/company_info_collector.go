@@ -19,7 +19,7 @@ func addToMap(collector company.Collector) {
     collectors[collector.GetStockExchange()] = collector
 }
 
-func CollectCompanyInfo() *[]model.Company {
+func CollectCompanyInfo() []model.Company {
     logger.Infow("收集公司信息开始")
     tempData := make([]model.Company, 0)
     for key, collector := range collectors {
@@ -28,5 +28,5 @@ func CollectCompanyInfo() *[]model.Company {
         tempData = append(tempData, all...)
     }
     logger.Infow("收集公司信息结束")
-    return &tempData
+    return tempData
 }
