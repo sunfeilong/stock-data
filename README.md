@@ -1,16 +1,14 @@
-## 数据
+## 简介
 
-## 获取每分钟股票数据信息接口 
+收集股票数据。数据在[./storage](./storage)目录。
 
-### 深证所(SZS)
+数据文件命名:
 
-1. 股票列表
+* 公司数据: `company-年-月-日.json` 
+* 股票数据: `data-年-月-日.json`  
 
-    http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1110x&TABKEY=tab1&PAGENO=2&random=0.23552698013187512
+## 进度  
 
-2. 股票实时信息，以及累计信息
+目前已经完成深交所数据收集。 
 
-    http://www.szse.cn/api/market/ssjjhq/getTimeData?random=0.20171192356322387&marketId=1&code=000001
-
-### 
 
