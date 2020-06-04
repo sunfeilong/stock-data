@@ -1,17 +1,20 @@
 package persistent
 
 import (
-    "../model"
-    "../tool"
     "encoding/json"
     "errors"
+    "github.com/xiaotian/stock/pkg/model"
+    "github.com/xiaotian/stock/pkg/s-logger"
+    "github.com/xiaotian/stock/pkg/tool"
     "io/ioutil"
     "os"
 )
 
-type DataFilePreserver struct{}
+var logger = s_logger.New()
 
-func (c DataFilePreserver) Save(data []model.Data) error {
+type CompanyFilePreserver struct{}
+
+func (c CompanyFilePreserver) Save(data []model.Company) error {
     path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
         logger.Infow("保存数据到文件,未找到配置路径", "pathName", pathName, "err", err)
@@ -30,7 +33,7 @@ func (c DataFilePreserver) Save(data []model.Data) error {
     return nil
 }
 
-func (c DataFilePreserver) Read() ([]model.Data, error) {
+func (c CompanyFilePreserver) Read() ([]model.Company, error) {
     path, err := tool.GetPath(pathName, maxLevel, maxLevel)
     if nil != err {
         logger.Infow("从文件读取数据,未找到配置路径", "pathName", pathName, "err", err)
@@ -42,8 +45,8 @@ func (c DataFilePreserver) Read() ([]model.Data, error) {
         return nil, errors.New("从文件读取数据,读取数据异常")
     }
 
-    d := &[]model.Data{}
-    err = json.Unmarshal(file, d)
+    d := &[]model.Company{}
+    err = json.Unmarshal(file, &d)
     if nil != err {
         logger.Infow("从文件读取数据,解析数据异常", "pathName", pathName, "err", err)
         return nil, errors.New("从文件读取数据,读取数据异常")
@@ -51,14 +54,14 @@ func (c DataFilePreserver) Read() ([]model.Data, error) {
     return *d, nil
 }
 
-func (c DataFilePreserver) getFullFileName(append string) string {
+func (c CompanyFilePreserver) getFullFileName(append string) string {
     return c.getPrefix() + append + c.getSuffix()
 }
 
-func (c DataFilePreserver) getPrefix() string {
-    return "data-"
+func (c CompanyFilePreserver) getPrefix() string {
+    return "company-"
 }
 
-func (c DataFilePreserver) getSuffix() string {
+func (c CompanyFilePreserver) getSuffix() string {
     return ".json"
 }

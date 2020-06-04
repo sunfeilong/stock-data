@@ -1,9 +1,9 @@
 package company
 
 import (
-    "../../model"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/model"
 )
-import "../../config"
 
 type Collector interface {
     //获取收集器对应的交易所

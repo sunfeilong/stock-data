@@ -1,9 +1,9 @@
 package company
 
 import (
-    "../../config"
-    "../../enums"
     "github.com/stretchr/testify/assert"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/enums"
     "log"
     "testing"
 )

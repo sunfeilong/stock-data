@@ -1,11 +1,11 @@
 package data
 
 import (
-    "../../config"
-    "../../enums"
-    "../../model"
     "encoding/json"
     "github.com/stretchr/testify/assert"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/enums"
+    "github.com/xiaotian/stock/pkg/model"
     "testing"
 )
 

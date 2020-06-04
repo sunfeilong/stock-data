@@ -1,17 +1,16 @@
 package data
 
 import (
-    "../../model"
-    "../../s-logger"
-    "../../tool"
     "encoding/json"
     "errors"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/enums"
+    "github.com/xiaotian/stock/pkg/model"
+    "github.com/xiaotian/stock/pkg/s-logger"
+    "github.com/xiaotian/stock/pkg/tool"
     "io/ioutil"
     "net/http"
 )
-
-import "../../config"
-import "../../enums"
 
 var logger = s_logger.New()
 

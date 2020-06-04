@@ -3,7 +3,7 @@ package tool
 import (
     "github.com/stretchr/testify/assert"
     "testing"
-    time2 "time"
+    "time"
 )
 
 const (
@@ -13,30 +13,30 @@ const (
 )
 
 func TestNowDateTime(t *testing.T) {
-    time := NowDateTime()
-    assert.NotEmpty(t, time)
-    assert.Equal(t, 19, len(time))
+    dateTime := NowDateTime()
+    assert.NotEmpty(t, dateTime)
+    assert.Equal(t, 19, len(dateTime))
 }
 
 func TestNowDate(t *testing.T) {
-    time := NowDate()
-    assert.NotEmpty(t, time)
-    assert.Equal(t, 10, len(time))
+    date := NowDate()
+    assert.NotEmpty(t, date)
+    assert.Equal(t, 10, len(date))
 }
 
 func TestNowTime(t *testing.T) {
-    time := NowTime()
-    assert.NotEmpty(t, time)
-    assert.Equal(t, 8, len(time))
+    nowTime := NowTime()
+    assert.NotEmpty(t, nowTime)
+    assert.Equal(t, 8, len(nowTime))
 }
 
 func TestParseNowDateTime(t *testing.T) {
-    time := ParseDateTime(dateTimeStr)
-    assert.NotEmpty(t, time)
-    date, month, day := time.Date()
-    clock, min, sec := time.Clock()
+    dateTime := ParseDateTime(dateTimeStr)
+    assert.NotEmpty(t, dateTime)
+    date, month, day := dateTime.Date()
+    clock, min, sec := dateTime.Clock()
     assert.Equal(t, date, 2006)
-    assert.Equal(t, time2.January, month)
+    assert.Equal(t, time.January, month)
     assert.Equal(t, 2, day)
     assert.Equal(t, 15, clock)
     assert.Equal(t, 4, min)
@@ -44,18 +44,18 @@ func TestParseNowDateTime(t *testing.T) {
 }
 
 func TestParseNowDate(t *testing.T) {
-    time := ParseDate(dateStr)
-    assert.NotEmpty(t, time)
-    date, month, day := time.Date()
+    d := ParseDate(dateStr)
+    assert.NotEmpty(t, d)
+    date, month, day := d.Date()
     assert.Equal(t, date, 2006)
-    assert.Equal(t, time2.January, month)
+    assert.Equal(t, time.January, month)
     assert.Equal(t, 2, day)
 }
 
 func TestParseNowTime(t *testing.T) {
-    time := ParseTime(timeStr)
-    assert.NotEmpty(t, time)
-    clock, min, sec := time.Clock()
+    nowTime := ParseTime(timeStr)
+    assert.NotEmpty(t, nowTime)
+    clock, min, sec := nowTime.Clock()
     assert.Equal(t, 15, clock)
     assert.Equal(t, 4, min)
     assert.Equal(t, 5, sec)

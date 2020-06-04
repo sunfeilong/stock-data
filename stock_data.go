@@ -1,9 +1,9 @@
 package main
 
 import (
-    "./collector"
-    "./persistent"
-    "./s-logger"
+    "github.com/xiaotian/stock/pkg/collector"
+    "github.com/xiaotian/stock/pkg/persistent"
+    "github.com/xiaotian/stock/pkg/s-logger"
 )
 
 var logger = s_logger.New()

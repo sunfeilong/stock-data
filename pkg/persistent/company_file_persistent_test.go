@@ -1,8 +1,8 @@
 package persistent
 
 import (
-    "../model"
     "github.com/stretchr/testify/assert"
+    "github.com/xiaotian/stock/pkg/model"
     "testing"
 )
 

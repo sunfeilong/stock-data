@@ -1,7 +1,7 @@
 package data
 
-import "../../model"
-import "../../config"
+import "github.com/xiaotian/stock/pkg/model"
+import "github.com/xiaotian/stock/pkg/config"
 
 type Collector interface {
     GetStockExchange() int

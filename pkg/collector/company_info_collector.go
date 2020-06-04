@@ -1,10 +1,10 @@
 package collector
 
 import (
-    "../config"
-    "../model"
-    "../s-logger"
-    "./company"
+    "github.com/xiaotian/stock/pkg/collector/company"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/model"
+    "github.com/xiaotian/stock/pkg/s-logger"
 )
 
 var logger = s_logger.New()

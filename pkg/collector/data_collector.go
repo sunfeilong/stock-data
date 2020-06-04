@@ -1,9 +1,9 @@
 package collector
 
 import (
-    "../config"
-    "../model"
-    "./data"
+    "github.com/xiaotian/stock/pkg/collector/data"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/model"
 )
 
 var dataCollectors map[int]data.Collector = make(map[int]data.Collector)

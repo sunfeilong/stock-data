@@ -1,6 +1,6 @@
 package persistent
 
-import "../model"
+import "github.com/xiaotian/stock/pkg/model"
 
 //持久接口
 type Preserver interface {

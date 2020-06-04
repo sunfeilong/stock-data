@@ -1,8 +1,8 @@
 package tool
 
 import (
-    "../s-logger"
     "errors"
+    "github.com/xiaotian/stock/pkg/s-logger"
     "os"
 )
 

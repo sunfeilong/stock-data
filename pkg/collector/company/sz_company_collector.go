@@ -1,11 +1,11 @@
 package company
 
 import (
-    "../../config"
-    "../../enums"
-    "../../model"
-    "../../s-logger"
     "encoding/json"
+    "github.com/xiaotian/stock/pkg/config"
+    "github.com/xiaotian/stock/pkg/enums"
+    "github.com/xiaotian/stock/pkg/model"
+    "github.com/xiaotian/stock/pkg/s-logger"
     "io/ioutil"
     "math/rand"
     "net/http"

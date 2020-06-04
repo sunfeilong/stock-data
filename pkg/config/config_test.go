@@ -2,10 +2,10 @@ package config
 
 import (
     "fmt"
+    "github.com/stretchr/testify/assert"
+    "github.com/xiaotian/stock/pkg/enums"
     "testing"
 )
-import "github.com/stretchr/testify/assert"
-import "../enums"
 
 func TestGetStockExchangeConfig(t *testing.T) {
     HKConfig := GetStockConfig(enums.HK)
