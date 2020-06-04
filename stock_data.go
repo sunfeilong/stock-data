@@ -22,16 +22,16 @@ func main() {
         logger.Infof("项目定时器设置成功,定时器信息: %v", timer)
         logger.Infow("项目定时器设置成功.", "nextRunTime", tool.DateTime(now.Add(duration)))
         <-timer.C
-        logger.Infow("收集公司信息触发执行")
-        companyInfos := collector.CollectCompanyInfo()
-        if err := companyFile.Save(companyInfos); err != nil {
-            logger.Errorw("保存数据失败", "error", err)
-        }
+    logger.Infow("收集公司信息触发执行")
+    companyInfos := collector.CollectCompanyInfo()
+    if err := companyFile.Save(companyInfos); err != nil {
+        logger.Errorw("保存数据失败", "error", err)
+    }
 
-        dataList := collector.CollectData(companyInfos)
-        if err := dataFile.Save(dataList); err != nil {
-            logger.Errorw("保存数据失败", "error", err)
-        }
+    dataList := collector.CollectData(companyInfos)
+    if err := dataFile.Save(dataList); err != nil {
+        logger.Errorw("保存数据失败", "error", err)
+    }
     }
 }
 
