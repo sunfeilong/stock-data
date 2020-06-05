@@ -1,3 +1,7 @@
 .idea/
 
 *.log
+
+nohup.out
+
+stock
