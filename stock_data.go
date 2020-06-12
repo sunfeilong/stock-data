@@ -5,6 +5,7 @@ import (
     "github.com/xiaotian/stock/pkg/persistent"
     "github.com/xiaotian/stock/pkg/s-logger"
     "github.com/xiaotian/stock/pkg/tool"
+    "os/exec"
     "time"
 )
 
@@ -32,6 +33,7 @@ func main() {
         if err := dataFile.Save(dataList); err != nil {
             logger.Errorw("保存数据失败", "error", err)
         }
+        push()
     }
 }
 
@@ -67,4 +69,27 @@ func nextWorkDay(t time.Time) time.Time {
 
 func isWeekEndDay(t time.Time) bool {
     return t.Weekday() == time.Saturday || t.Weekday() == time.Sunday
+}
+
+func push() {
+    logger.Infow("推送数据到 github, 开始执行.")
+    add := exec.Command("git", "add", ".")
+    commit := exec.Command("git", "commit", "-m", "自动提交数据")
+    pull := exec.Command("git", "pull")
+    push := exec.Command("git", "push")
+
+    if err := add.Run(); nil != err {
+        logger.Infow("推送数据到 github, add 执行成功.")
+        if err := commit.Run(); nil != err {
+            logger.Infow("推送数据到 github, commit 执行成功.")
+            if err := pull.Run(); nil != err {
+                logger.Infow("推送数据到 github, pull 执行成功.")
+                if err := push.Run(); nil != err {
+                    logger.Infow("推送数据到 github, push 执行成功.")
+                    return
+                }
+            }
+        }
+    }
+    logger.Infow("推送数据到 github, 执行结束.")
 }
