@@ -34,7 +34,7 @@ func init() {
     })
 
     console := zapcore.Lock(os.Stdout)
-    prodEncoder := zapcore.NewJSONEncoder(zap.NewProductionEncoderConfig())
+    prodEncoder := zapcore.NewJSONEncoder(NewEncoderConfig())
     devEncoder := zapcore.NewConsoleEncoder(NewEncoderConfig())
 
     core := zapcore.NewTee(
