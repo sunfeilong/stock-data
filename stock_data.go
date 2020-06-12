@@ -84,7 +84,7 @@ func push() {
             logger.Infow("推送数据到 github, commit 执行成功.")
             if err := pull.Run(); nil == err {
                 logger.Infow("推送数据到 github, pull 执行成功.")
-                if err := push.Run(); nil == err {
+                if err := push.Run(); nil == err { 
                     logger.Infow("推送数据到 github, push 执行成功.")
                     return
                 }
