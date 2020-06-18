@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/spf13/viper"
+    "github.com/spf13/viper"
 )
 
 //配置文件名字
@@ -20,6 +20,7 @@ func init() {
     projectViper.AddConfigPath(".")
     projectViper.AddConfigPath("../")
     projectViper.AddConfigPath("../../")
+    projectViper.AddConfigPath("../../../")
     projectViper.SetConfigName(defaultConfigFileName)
     if err := projectViper.ReadInConfig(); nil != err {
         panic(err)

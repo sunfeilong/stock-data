@@ -7,7 +7,7 @@ stock:
       realtimeinfourl: "http://www.szse.cn/api/market/ssjjhq/getTimeData?random=0.20171192356322387&marketId=1"
     - stockexchange: "SH"
       stockexchangecode: 130
-      companyinfourl: ""
+      companyinfourl: "http://query.sse.com.cn/security/stock/getStockListData.do?isPagination=true&stockCode=&csrcCode=&areaName=&pageHelp.cacheSize=1&pageHelp.pageSize=100"
       stockinfourl: ""
       realtimeinfourl: ""
     - stockexchange: "HK"

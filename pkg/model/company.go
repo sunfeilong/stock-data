@@ -9,4 +9,5 @@ type Company struct {
     FullName      string `json:"full_name"`
     IndustryCode  string `json:"industry_code"`
     IndustryName  string `json:"industry_name"`
+    ListingDate   string `json:"listing_date"`
 }
