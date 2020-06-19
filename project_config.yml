@@ -9,7 +9,7 @@ stock:
       stockexchangecode: 130
       companyinfourl: "http://query.sse.com.cn/security/stock/getStockListData.do?isPagination=true&stockCode=&csrcCode=&areaName=&pageHelp.cacheSize=1&pageHelp.pageSize=100"
       stockinfourl: ""
-      realtimeinfourl: ""
+      realtimeinfourl: "http://yunhq.sse.com.cn:32041//v1/sh1/line/{code}?begin=0&end=-1&select=time%2Cprice%2Cvolume&_=1592540108264"
     - stockexchange: "HK"
       stockexchangecode: 160
       companyinfourl: ""

@@ -11,6 +11,7 @@ var dataCollectors map[int]data.Collector = make(map[int]data.Collector)
 func init() {
     logger.Infow("初始化数据收集器容器")
     addDataCollectorToMap(data.SZDataCollector{})
+    addDataCollectorToMap(data.SHDataCollector{})
 }
 
 func addDataCollectorToMap(collector data.Collector) {
