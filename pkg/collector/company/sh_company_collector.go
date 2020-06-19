@@ -34,7 +34,7 @@ type SHResponseData struct {
 }
 
 func (s SHCompanyCollector) String() string {
-    return "SZCompanyCollector"
+    return "SHCompanyCollector"
 }
 
 func (s SHCompanyCollector) GetStockExchange() int {

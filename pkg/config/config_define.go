@@ -1,5 +1,9 @@
 package config
 
+import (
+    "fmt"
+)
+
 //配置信息定义
 type StockConfig struct {
     StockExchangeCode int
@@ -14,5 +18,6 @@ type StockConfigs struct {
 }
 
 func (s StockConfig) String() string {
-    return ""
+    return fmt.Sprintf("StockExchangeCode: %d, StockExchange: %s, CompanyInfoUrl: %s, StockInfoUrl: %s, RealTimeInfoUrl: %s",
+        s.StockExchangeCode, s.StockExchange, s.CompanyInfoUrl, s.StockInfoUrl, s.RealTimeInfoUrl)
 }
