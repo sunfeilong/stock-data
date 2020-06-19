@@ -12,8 +12,8 @@ var collectors map[int]company.Collector = make(map[int]company.Collector)
 
 func init() {
     logger.Infow("初始化收集器容器")
-    //addToMap(company.SZCompanyCollector{})
-    //addToMap(company.SHCompanyCollector{})
+    addToMap(company.SZCompanyCollector{})
+    addToMap(company.SHCompanyCollector{})
     addToMap(company.HKCompanyCollector{})
 }
 
