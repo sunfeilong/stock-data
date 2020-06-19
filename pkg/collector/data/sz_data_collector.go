@@ -59,24 +59,24 @@ func getData(company model.Company, config config.StockConfig) (model.Data, erro
     data.Plate = company.Plate
 
     url := config.RealTimeInfoUrl + "&code=" + company.Code
-    logger.Infow("获取上市公司股票数据,开始", "code", company.Code, "company", company.ShortName, "url", url, )
+    logger.Infow("获取深交所上市公司股票数据,开始", "code", company.Code, "company", company.ShortName, "url", url, )
     response, err := http.Get(url)
     if err != nil {
-        logger.Errorw("获取上市公司股票数据,请求数据出现异常", "code", company.Code, "company", company.ShortName, "url", url, "error", err)
+        logger.Errorw("获取深交所上市公司股票数据,请求数据出现异常", "code", company.Code, "company", company.ShortName, "url", url, "error", err)
         return *data, errors.New("请求数据出现异常")
     }
     responseData, err := ioutil.ReadAll(response.Body)
     if err != nil {
-        logger.Errorw("获取上市公司股票数据,读取响应数据出错", "code", company.Code, "company", company.ShortName, "url", url, "error", err)
+        logger.Errorw("获取深交所上市公司股票数据,读取响应数据出错", "code", company.Code, "company", company.ShortName, "url", url, "error", err)
         return *data, errors.New("读取响应数据出错")
     }
     responseDataPointer := &Response{}
     if err = json.Unmarshal(responseData, responseDataPointer); err != nil {
-        logger.Errorw("获取上市公司股票数据,解析数据出错", "code", company.Code, "company", company.ShortName, "url", url, "error", err)
+        logger.Errorw("获取深交所上市公司股票数据,解析数据出错", "code", company.Code, "company", company.ShortName, "url", url, "error", err)
         return *data, errors.New("解析数据出错")
     }
     copyData(data, responseDataPointer)
-    logger.Infow("获取上市公司股票数据,结束", "code", company.Code, "company", company.ShortName, "url", url, )
+    logger.Infow("获取深交所上市公司股票数据,结束", "code", company.Code, "company", company.ShortName, "url", url, )
     return *data, nil
 }
 

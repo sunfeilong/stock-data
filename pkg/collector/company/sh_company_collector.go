@@ -38,7 +38,7 @@ func (s SHCompanyCollector) String() string {
 }
 
 func (s SHCompanyCollector) GetStockExchange() int {
-    return enums.SZ
+    return enums.SH
 }
 
 func (s SHCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
@@ -92,7 +92,6 @@ func SHReadPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []
         return nil
     }
     responseDataPoint := &SHResponse{}
-    logger.Infow("响应数据", "数据", string(responseDataByte))
     err = json.Unmarshal(responseDataByte, &responseDataPoint)
     if err != nil {
         logger.Errorw("读取上交所公司列表,解析数据出现异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)

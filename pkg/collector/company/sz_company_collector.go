@@ -42,14 +42,14 @@ func (s SZCompanyCollector) GetStockExchange() int {
     return enums.SZ
 }
 
-func (sz SZCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
-    logger.Infow("收集所有公司信息,开始.", "stockExchangeCode", sz.GetStockExchange(), "configInfo", conf)
+func (s SZCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
+    logger.Infow("收集深交所所有公司信息,开始.", "stockExchangeCode", s.GetStockExchange(), "configInfo", conf)
     result := make([]model.Company, 0)
-    allPlate := enums.GetAll()
+    allPlate := enums.GetByStockExchange(conf)
     for _, plate := range allPlate {
         result = append(result, GetPlateData(conf, plate)...)
     }
-    logger.Infow("收集所有公司信息,结束.", "stockExchangeCode", sz.GetStockExchange(), "configInfo", conf, "length", len(result))
+    logger.Infow("收集深交所所有公司信息,结束.", "stockExchangeCode", s.GetStockExchange(), "configInfo", conf, "length", len(result))
     return result
 }
 
@@ -70,21 +70,21 @@ func GetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Compan
 //读取每页的数据
 func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []model.Company {
     requestUrl := conf.CompanyInfoUrl + "&TABKEY=" + plate.Tab + "&random=" + strconv.Itoa(rand.Int()) + "&PAGENO=" + strconv.Itoa(page)
-    logger.Infow("获取公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)
+    logger.Infow("获取深交所公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)
     response, err := http.Get(requestUrl)
     if nil != err {
-        logger.Errorw("获取公司列表数据异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
+        logger.Errorw("获取深交所公司列表数据异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
         return nil
     }
     responseDataByte, err := ioutil.ReadAll(response.Body)
     if nil != err {
-        logger.Errorw("读取公司列表数据异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
+        logger.Errorw("读取深交所公司列表数据异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
         return nil
     }
     responseDataPoint := &[]Response{}
     err = json.Unmarshal(responseDataByte, &responseDataPoint)
     if err != nil {
-        logger.Errorw("读取公司列表,解析数据出现异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
+        logger.Errorw("读取深交所公司列表,解析数据出现异常.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl, "err", err)
         return nil
     }
 
@@ -109,7 +109,7 @@ func responseToCompanyMapper(response Response, plate enums.PlateEnum) []model.C
         }
         result = append(result, company)
     }
-    logger.Infow("数据转换", "length", len(response.Data), "resultLength", len(result))
+    logger.Infow("深交所公司列表数据转换", "length", len(response.Data), "resultLength", len(result))
     return result
 }
 
