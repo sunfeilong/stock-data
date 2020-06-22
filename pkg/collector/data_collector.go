@@ -12,7 +12,7 @@ func init() {
     logger.Infow("初始化数据收集器容器")
     addDataCollectorToMap(data.SZDataCollector{})
     addDataCollectorToMap(data.SHDataCollector{})
-    addDataCollectorToMap(data.HKDataCollector{})
+    //addDataCollectorToMap(data.HKDataCollector{})
 }
 
 func addDataCollectorToMap(collector data.Collector) {
