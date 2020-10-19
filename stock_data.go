@@ -38,12 +38,12 @@ func main() {
 }
 
 func nextRunDurationZh(now time.Time) time.Duration {
-    return nextRunDuration(now, 15, 30, 0)
+    return nextRunDuration(now, 16, 30, 0)
 }
 
 func nextRunDuration(now time.Time, hour int, minute int, second int) time.Duration {
     workDay := now
-    if now.Hour() < 15 {
+    if now.Hour() < 16 || (now.Hour() == 16 && now.Minute() <= 30) {
         if isWeekEndDay(now) {
             workDay = nextWorkDay(now)
         }
