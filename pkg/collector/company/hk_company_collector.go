@@ -2,6 +2,7 @@ package company
 
 import (
     "encoding/json"
+    "github.com/xiaotian/stock/pkg/collector/token"
     "github.com/xiaotian/stock/pkg/config"
     "github.com/xiaotian/stock/pkg/enums"
     "github.com/xiaotian/stock/pkg/model"
@@ -46,24 +47,26 @@ func (s HKCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
     logger.Infow("收集港交所所有公司信息,开始.", "stockExchangeCode", s.GetStockExchange(), "configInfo", conf)
     result := make([]model.Company, 0)
     allPlate := enums.GetByStockExchange(conf)
+    hkToken := token.GetHKToken(conf.TokenUrl)
     for _, plate := range allPlate {
-        result = append(result, HKGetPlateData(conf, plate)...)
+        result = append(result, HKGetPlateData(conf, plate, hkToken)...)
     }
     logger.Infow("收集港交所所有公司信息,结束.", "stockExchangeCode", s.GetStockExchange(), "configInfo", conf, "length", len(result))
     return result
 }
 
 //获取每个板块的数据
-func HKGetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+func HKGetPlateData(conf config.StockConfig, plate enums.PlateEnum, hkToken string) []model.Company {
     logger.Infow("收集所有公司信息,收集指定板块信息,开始.", "stockExchangeCode", conf.StockExchangeCode, "plate", plate)
-    data := HKReadPageData(conf, plate)
+    data := HKReadPageData(conf, plate, hkToken)
     logger.Infow("收集所有公司信息,收集指定板块信息,结束.", "stockExchangeCode", conf.StockExchangeCode, "plate", plate)
     return data
 }
 
 //读取每页的数据
-func HKReadPageData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+func HKReadPageData(conf config.StockConfig, plate enums.PlateEnum, hkToken string) []model.Company {
     requestUrl := conf.CompanyInfoUrl + "&market=" + plate.Tab + "&qid=" + strconv.Itoa(rand.Int()) + "&_=" + strconv.Itoa(rand.Int())
+    requestUrl = strings.ReplaceAll(requestUrl, "{token}", hkToken)
     logger.Infow("获取港交所公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)
     response, err := http.Get(requestUrl)
     if nil != err {

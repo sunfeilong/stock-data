@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "errors"
     "fmt"
+    "github.com/xiaotian/stock/pkg/collector/token"
     "github.com/xiaotian/stock/pkg/config"
     "github.com/xiaotian/stock/pkg/enums"
     "github.com/xiaotian/stock/pkg/model"
@@ -35,6 +36,7 @@ func (s HKDataCollector) GetStockExchange() int {
 func (s HKDataCollector) FetchAll(company []model.Company, conf config.StockConfig) []model.Data {
     logger.Infow("获取港交所上市公司股票价格数据,", "company count", len(company), "conf", conf)
     result := make([]model.Data, 0)
+    hkToken := token.GetHKToken(conf.TokenUrl)
     for _, c := range company {
         if s.GetStockExchange() != c.StockExchange {
             logger.Infow("获取港交所上市公司股票价格数据,收集器不能处理对应公司数据,跳过",
@@ -43,7 +45,7 @@ func (s HKDataCollector) FetchAll(company []model.Company, conf config.StockConf
             continue
         }
         logger.Infow("获取港交所上市公司股票价格数据", "company", c, "conf", conf)
-        data, err := HKGetData(c, conf)
+        data, err := HKGetData(c, conf, hkToken)
         if err != nil {
             logger.Errorw("获取港交所上市公司股票价格数据,获取数据异常", "company", c, "conf", conf, "err", err)
             continue
@@ -53,13 +55,15 @@ func (s HKDataCollector) FetchAll(company []model.Company, conf config.StockConf
     return result
 }
 
-func HKGetData(company model.Company, config config.StockConfig) (model.Data, error) {
+func HKGetData(company model.Company, config config.StockConfig, hkToken string) (model.Data, error) {
     data := &model.Data{}
     data.StockExchange = company.StockExchange
     data.Code = company.Code
     data.Plate = company.Plate
-    url := strings.Replace(config.RealTimeInfoUrl, "{code}", fmt.Sprintf("%04s", company.Code), -1) + "&qid=" + strconv.Itoa(rand.Int()) + "&_=" + strconv.Itoa(rand.Int())
-    logger.Infow("获取港交所上市公司股票数据,开始", "code", company.Code, "company", company.ShortName, "url", url, )
+    url := strings.Replace(config.RealTimeInfoUrl, "{code}", fmt.Sprintf("%04s", company.Code), -1)
+    url = strings.Replace(url, "{token}", hkToken, -1)
+    url = url + "&qid=" + strconv.Itoa(rand.Int()) + "&_=" + strconv.Itoa(rand.Int())
+    logger.Infow("获取港交所上市公司股票数据,开始", "code", company.Code, "company", company.ShortName, "url", url)
     client := &http.Client{}
     request, err := http.NewRequest("GET", url, nil)
     if err != nil {

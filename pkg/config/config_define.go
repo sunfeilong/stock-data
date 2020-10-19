@@ -11,6 +11,7 @@ type StockConfig struct {
     CompanyInfoUrl    string
     StockInfoUrl      string
     RealTimeInfoUrl   string
+    TokenUrl          string
 }
 
 type StockConfigs struct {

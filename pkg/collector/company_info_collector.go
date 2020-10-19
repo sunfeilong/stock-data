@@ -14,7 +14,7 @@ func init() {
     logger.Infow("初始化收集器容器")
     addToMap(company.SZCompanyCollector{})
     addToMap(company.SHCompanyCollector{})
-    //addToMap(company.HKCompanyCollector{})
+    addToMap(company.HKCompanyCollector{})
 }
 
 func addToMap(collector company.Collector) {
