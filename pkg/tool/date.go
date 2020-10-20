@@ -35,7 +35,7 @@ func ParseDateTime(timeStr string) time.Time {
     if nil != err {
         panic(err)
     }
-    return result
+    return result.In(time.Local)
 }
 
 func ParseDate(str string) time.Time {
@@ -43,7 +43,7 @@ func ParseDate(str string) time.Time {
     if nil != err {
         panic(err)
     }
-    return result
+    return result.In(time.Local)
 }
 
 func ParseTime(str string) time.Time {
@@ -51,5 +51,5 @@ func ParseTime(str string) time.Time {
     if nil != err {
         panic(err)
     }
-    return result
+    return result.In(time.Local)
 }

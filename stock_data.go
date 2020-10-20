@@ -47,12 +47,12 @@ func nextRunDuration(now time.Time, hour int, minute int, second int) time.Durat
         if isWeekEndDay(now) {
             workDay = nextWorkDay(now)
         }
-        date := time.Date(workDay.Year(), workDay.Month(), workDay.Day(), hour, minute, second, 0, time.Local)
+        date := time.Date(workDay.Year(), workDay.Month(), workDay.Day(), hour, minute, second, 0, now.Location())
         return date.Sub(now)
     }
 
     workDay = nextWorkDay(now)
-    date := time.Date(workDay.Year(), workDay.Month(), workDay.Day(), hour, minute, second, 0, time.Local)
+    date := time.Date(workDay.Year(), workDay.Month(), workDay.Day(), hour, minute, second, 0, now.Location())
     return date.Sub(now)
 }
 
