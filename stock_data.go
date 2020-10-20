@@ -22,7 +22,7 @@ func main() {
         timer := time.NewTimer(duration)
         logger.Infof("项目定时器设置成功,定时器信息: %v", timer)
         logger.Infow("项目定时器设置成功.", "nextRunTime", tool.DateTime(now.Add(duration)))
-        <-timer.C
+       /* <-timer.C*/
         logger.Infow("收集公司信息触发执行")
         companyInfos := collector.CollectCompanyInfo()
         if err := companyFile.Save(companyInfos); err != nil {

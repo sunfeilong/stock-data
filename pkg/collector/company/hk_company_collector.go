@@ -11,6 +11,7 @@ import (
     "net/http"
     "strconv"
     "strings"
+    "time"
 )
 
 //香港交易所上市公司信息收集器
@@ -65,6 +66,7 @@ func HKGetPlateData(conf config.StockConfig, plate enums.PlateEnum, hkToken stri
 
 //读取每页的数据
 func HKReadPageData(conf config.StockConfig, plate enums.PlateEnum, hkToken string) []model.Company {
+    time.Sleep(time.Millisecond * 500)
     requestUrl := conf.CompanyInfoUrl + "&market=" + plate.Tab + "&qid=" + strconv.Itoa(rand.Int()) + "&_=" + strconv.Itoa(rand.Int())
     requestUrl = strings.ReplaceAll(requestUrl, "{token}", hkToken)
     logger.Infow("获取港交所公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)

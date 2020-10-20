@@ -12,6 +12,7 @@ import (
     "regexp"
     "strconv"
     "strings"
+    "time"
 )
 
 var simpleNameReg = regexp.MustCompile("(.*)<u>(.*)</u>(.*)")
@@ -69,6 +70,7 @@ func GetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Compan
 
 //读取每页的数据
 func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []model.Company {
+    time.Sleep(time.Millisecond * 500)
     requestUrl := conf.CompanyInfoUrl + "&TABKEY=" + plate.Tab + "&random=" + strconv.Itoa(rand.Int()) + "&PAGENO=" + strconv.Itoa(page)
     logger.Infow("获取深交所公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)
     response, err := http.Get(requestUrl)

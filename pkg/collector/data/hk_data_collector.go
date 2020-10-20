@@ -56,6 +56,7 @@ func (s HKDataCollector) FetchAll(company []model.Company, conf config.StockConf
 }
 
 func HKGetData(company model.Company, config config.StockConfig, hkToken string) (model.Data, error) {
+    time.Sleep(time.Millisecond * 500)
     data := &model.Data{}
     data.StockExchange = company.StockExchange
     data.Code = company.Code
