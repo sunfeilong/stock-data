@@ -20,7 +20,7 @@ func (c CompanyFilePreserver) Save(data []model.Company) error {
         logger.Infow("保存数据到文件,未找到配置路径", "pathName", pathName, "err", err)
         return errors.New("保存数据到文件,未找到配置路径")
     }
-    marshal, err := json.MarshalIndent(data, "", "  ")
+    marshal, err := json.Marshal(data)
     if nil != err {
         logger.Infow("保存数据到文件,数据格式化异常", "pathName", pathName, "err", err)
         return errors.New("保存数据到文件,数据格式化异常")
