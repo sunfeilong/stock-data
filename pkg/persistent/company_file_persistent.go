@@ -7,7 +7,6 @@ import (
     "github.com/xiaotian/stock/pkg/s-logger"
     "github.com/xiaotian/stock/pkg/tool"
     "io/ioutil"
-    "os"
 )
 
 var logger = s_logger.New()
@@ -25,7 +24,7 @@ func (c CompanyFilePreserver) Save(data []model.Company) error {
         logger.Infow("保存数据到文件,数据格式化异常", "pathName", pathName, "err", err)
         return errors.New("保存数据到文件,数据格式化异常")
     }
-    err = ioutil.WriteFile(path+c.getFullFileName(tool.NowDate()), marshal, os.ModeAppend)
+    err = ioutil.WriteFile(path+c.getFullFileName(tool.NowDate()), marshal, 0664)
     if nil != err {
         logger.Infow("保存数据到文件,写入文件数据异常", "pathName", pathName, "err", err)
         return errors.New("保存数据到文件,写入文件数据异常")
