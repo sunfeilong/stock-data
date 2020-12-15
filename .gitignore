@@ -1,0 +1,9 @@
+.idea/
+
+*.log
+
+nohup.out
+
+stock
+stock.exe
+
