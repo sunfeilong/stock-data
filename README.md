@@ -4,6 +4,11 @@
 
 用于闭市之后收集当天的股票价格数据。
 
+配置 `project_config.yml`: 
+
+* `datasavepath`：数据文件保存路径，需要配置。
+* `skipIfnodata`：当获取数据为空的时候是否跳过。设置为true当收集到数据为空时会跳过。
+
 数据文件命名:
 
 * 公司数据: `company-年-月-日.json` 
@@ -16,7 +21,6 @@
 * [深圳证券交易所](http://www.szse.cn/)数据收集。
 * [上海证券交易所](http://www.sse.com.cn/)数据收集。
 * [香港交易所](https://sc.hkex.com.hk/TuniS/www.hkex.com.hk/?sc_lang=zh-cn)数据收集。
-* 
 
 ### 正在做
 
