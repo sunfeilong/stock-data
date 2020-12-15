@@ -1,16 +1,15 @@
 package data
 
 import (
-    "encoding/json"
-    "errors"
-    "github.com/xiaotian/stock/pkg/config"
-    "github.com/xiaotian/stock/pkg/enums"
-    "github.com/xiaotian/stock/pkg/model"
-    "github.com/xiaotian/stock/pkg/s-logger"
-    "github.com/xiaotian/stock/pkg/tool"
-    "io/ioutil"
-    "net/http"
-    "time"
+	"encoding/json"
+	"errors"
+	"github.com/xiaotian/stock/pkg/enums"
+	"github.com/xiaotian/stock/pkg/model"
+	"github.com/xiaotian/stock/pkg/s-logger"
+	"github.com/xiaotian/stock/pkg/tool"
+	"io/ioutil"
+	"net/http"
+	"time"
 )
 
 var logger = s_logger.New()
@@ -32,7 +31,7 @@ func (s SZDataCollector) GetStockExchange() int {
     return enums.SZ
 }
 
-func (s SZDataCollector) FetchAll(company []model.Company, conf config.StockConfig) []model.Data {
+func (s SZDataCollector) FetchAll(company []model.Company, conf model.StockConfig) []model.Data {
     logger.Infow("获取深交所上市公司股票价格数据,", "company count", len(company), "conf", conf)
     result := make([]model.Data, 0)
     for _, c := range company {
@@ -53,7 +52,7 @@ func (s SZDataCollector) FetchAll(company []model.Company, conf config.StockConf
     return result
 }
 
-func getData(company model.Company, config config.StockConfig) (model.Data, error) {
+func getData(company model.Company, config model.StockConfig) (model.Data, error) {
     time.Sleep(time.Millisecond * 500)
     data := &model.Data{}
     data.StockExchange = company.StockExchange

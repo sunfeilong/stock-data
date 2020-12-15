@@ -1,4 +1,6 @@
 stock:
+  skipIfnodata: true
+  datasavepath: '/man/data/stock_data'
   configs:
     - stockexchange: "SZ"
       stockexchangecode: 100

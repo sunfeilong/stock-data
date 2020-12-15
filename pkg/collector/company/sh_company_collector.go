@@ -1,15 +1,14 @@
 package company
 
 import (
-    "encoding/json"
-    "github.com/xiaotian/stock/pkg/config"
-    "github.com/xiaotian/stock/pkg/enums"
-    "github.com/xiaotian/stock/pkg/model"
-    "io/ioutil"
-    "math/rand"
-    "net/http"
-    "strconv"
-    "time"
+	"encoding/json"
+	"github.com/xiaotian/stock/pkg/enums"
+	"github.com/xiaotian/stock/pkg/model"
+	"io/ioutil"
+	"math/rand"
+	"net/http"
+	"strconv"
+	"time"
 )
 
 //上海交易所上市公司信息收集器
@@ -41,7 +40,7 @@ func (s SHCompanyCollector) GetStockExchange() int {
     return enums.SH
 }
 
-func (s SHCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
+func (s SHCompanyCollector) FetchAll(conf model.StockConfig) []model.Company {
     logger.Infow("收集上交所公司信息,开始.", "stockExchangeCode", s.GetStockExchange(), "configInfo", conf)
     result := make([]model.Company, 0)
     plates := enums.GetByStockExchange(conf)
@@ -53,7 +52,7 @@ func (s SHCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
 }
 
 //获取每个板块的数据
-func SHGetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+func SHGetPlateData(conf model.StockConfig, plate enums.PlateEnum) []model.Company {
     logger.Infow("收集上交所公司信息,收集指定板块信息,开始.", "stockExchangeCode", conf.StockExchangeCode, "plate", plate)
     result := make([]model.Company, 0)
     page := 1
@@ -67,7 +66,7 @@ func SHGetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Comp
 }
 
 //读取每页的数据
-func SHReadPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []model.Company {
+func SHReadPageData(conf model.StockConfig, page int, plate enums.PlateEnum) []model.Company {
     time.Sleep(time.Millisecond * 500)
     client := &http.Client{}
     pageStr := strconv.Itoa(page)

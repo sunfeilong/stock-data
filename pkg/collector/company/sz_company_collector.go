@@ -1,18 +1,17 @@
 package company
 
 import (
-    "encoding/json"
-    "github.com/xiaotian/stock/pkg/config"
-    "github.com/xiaotian/stock/pkg/enums"
-    "github.com/xiaotian/stock/pkg/model"
-    "github.com/xiaotian/stock/pkg/s-logger"
-    "io/ioutil"
-    "math/rand"
-    "net/http"
-    "regexp"
-    "strconv"
-    "strings"
-    "time"
+	"encoding/json"
+	"github.com/xiaotian/stock/pkg/enums"
+	"github.com/xiaotian/stock/pkg/model"
+	"github.com/xiaotian/stock/pkg/s-logger"
+	"io/ioutil"
+	"math/rand"
+	"net/http"
+	"regexp"
+	"strconv"
+	"strings"
+	"time"
 )
 
 var simpleNameReg = regexp.MustCompile("(.*)<u>(.*)</u>(.*)")
@@ -43,7 +42,7 @@ func (s SZCompanyCollector) GetStockExchange() int {
     return enums.SZ
 }
 
-func (s SZCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
+func (s SZCompanyCollector) FetchAll(conf model.StockConfig) []model.Company {
     logger.Infow("收集深交所所有公司信息,开始.", "stockExchangeCode", s.GetStockExchange(), "configInfo", conf)
     result := make([]model.Company, 0)
     allPlate := enums.GetByStockExchange(conf)
@@ -55,7 +54,7 @@ func (s SZCompanyCollector) FetchAll(conf config.StockConfig) []model.Company {
 }
 
 //获取每个板块的数据
-func GetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Company {
+func GetPlateData(conf model.StockConfig, plate enums.PlateEnum) []model.Company {
     logger.Infow("收集所有公司信息,收集指定板块信息,开始.", "stockExchangeCode", conf.StockExchangeCode, "plate", plate)
     result := make([]model.Company, 0)
     page := 1
@@ -69,7 +68,7 @@ func GetPlateData(conf config.StockConfig, plate enums.PlateEnum) []model.Compan
 }
 
 //读取每页的数据
-func readPageData(conf config.StockConfig, page int, plate enums.PlateEnum) []model.Company {
+func readPageData(conf model.StockConfig, page int, plate enums.PlateEnum) []model.Company {
     time.Sleep(time.Millisecond * 500)
     requestUrl := conf.CompanyInfoUrl + "&TABKEY=" + plate.Tab + "&random=" + strconv.Itoa(rand.Int()) + "&PAGENO=" + strconv.Itoa(page)
     logger.Infow("获取深交所公司列表.", "stockExchange", plate.StockExchange, "plate", plate.Tab, "url", requestUrl)

@@ -2,16 +2,18 @@ package config
 
 import (
     "github.com/spf13/viper"
+    "github.com/xiaotian/stock/pkg/model"
 )
 
 //配置文件名字
 const (
     defaultConfigFileName string = "project_config"
-    logConfigFileName     string = "log"
 )
 
 var projectViper *viper.Viper
-var stockConfigMap = make(map[int]StockConfig)
+var stockConfigMap = make(map[int]model.StockConfig)
+var dataSaveFilePath string
+var skipIfNoData bool
 
 func init() {
     //项目配置文件
@@ -26,19 +28,25 @@ func init() {
         panic(err)
     }
     //股票信息配置
-    var P *StockConfigs
+    var P *model.StockConfigs
     if err := projectViper.UnmarshalKey("stock", &P); nil != err {
         panic(err)
     }
     for _, stockConfig := range P.Configs {
         stockConfigMap[stockConfig.StockExchangeCode] = stockConfig
     }
+    dataSaveFilePath = P.DataSavePath
+    skipIfNoData = P.SkipIfNoData
 }
 
-func GetStockConfig(s int) StockConfig {
+func GetStockConfig(s int) model.StockConfig {
     return stockConfigMap[s]
 }
 
-func GetLogConfig() {
+func GetDataSaveFilePath() string {
+    return dataSaveFilePath
+}
 
+func SkipNoData() bool {
+    return skipIfNoData
 }

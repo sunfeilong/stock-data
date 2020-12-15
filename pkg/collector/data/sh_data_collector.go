@@ -1,17 +1,16 @@
 package data
 
 import (
-    "encoding/json"
-    "errors"
-    "fmt"
-    "github.com/xiaotian/stock/pkg/config"
-    "github.com/xiaotian/stock/pkg/enums"
-    "github.com/xiaotian/stock/pkg/model"
-    "github.com/xiaotian/stock/pkg/tool"
-    "io/ioutil"
-    "net/http"
-    "strings"
-    "time"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"github.com/xiaotian/stock/pkg/enums"
+	"github.com/xiaotian/stock/pkg/model"
+	"github.com/xiaotian/stock/pkg/tool"
+	"io/ioutil"
+	"net/http"
+	"strings"
+	"time"
 )
 
 const (
@@ -31,7 +30,7 @@ func (s SHDataCollector) GetStockExchange() int {
     return enums.SH
 }
 
-func (s SHDataCollector) FetchAll(company []model.Company, conf config.StockConfig) []model.Data {
+func (s SHDataCollector) FetchAll(company []model.Company, conf model.StockConfig) []model.Data {
     logger.Infow("获取上交所上市公司股票价格数据,", "company count", len(company), "conf", conf)
     result := make([]model.Data, 0)
     for _, c := range company {
@@ -52,7 +51,7 @@ func (s SHDataCollector) FetchAll(company []model.Company, conf config.StockConf
     return result
 }
 
-func SHGetData(company model.Company, config config.StockConfig) (model.Data, error) {
+func SHGetData(company model.Company, config model.StockConfig) (model.Data, error) {
     time.Sleep(time.Millisecond * 100)
     data := &model.Data{}
     data.StockExchange = company.StockExchange

@@ -5,7 +5,6 @@ import (
     "errors"
     "fmt"
     "github.com/xiaotian/stock/pkg/collector/token"
-    "github.com/xiaotian/stock/pkg/config"
     "github.com/xiaotian/stock/pkg/enums"
     "github.com/xiaotian/stock/pkg/model"
     "io/ioutil"
@@ -33,7 +32,7 @@ func (s HKDataCollector) GetStockExchange() int {
     return enums.HK
 }
 
-func (s HKDataCollector) FetchAll(company []model.Company, conf config.StockConfig) []model.Data {
+func (s HKDataCollector) FetchAll(company []model.Company, conf model.StockConfig) []model.Data {
     logger.Infow("获取港交所上市公司股票价格数据,", "company count", len(company), "conf", conf)
     result := make([]model.Data, 0)
     hkToken := token.GetHKToken(conf.TokenUrl)
@@ -55,7 +54,7 @@ func (s HKDataCollector) FetchAll(company []model.Company, conf config.StockConf
     return result
 }
 
-func HKGetData(company model.Company, config config.StockConfig, hkToken string) (model.Data, error) {
+func HKGetData(company model.Company, config model.StockConfig, hkToken string) (model.Data, error) {
     time.Sleep(time.Millisecond * 500)
     data := &model.Data{}
     data.StockExchange = company.StockExchange

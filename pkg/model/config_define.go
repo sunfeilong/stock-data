@@ -1,4 +1,4 @@
-package config
+package model
 
 import (
     "fmt"
@@ -16,6 +16,8 @@ type StockConfig struct {
 
 type StockConfigs struct {
     Configs []StockConfig
+    DataSavePath string
+    SkipIfNoData bool
 }
 
 func (s StockConfig) String() string {

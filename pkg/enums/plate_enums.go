@@ -1,6 +1,8 @@
 package enums
 
-import "github.com/xiaotian/stock/pkg/config"
+import (
+    "github.com/xiaotian/stock/pkg/model"
+)
 
 type PlateEnum struct {
     StockExchange int
@@ -25,7 +27,7 @@ func GetAll() []PlateEnum {
     return result
 }
 
-func GetByStockExchange(sc config.StockConfig) []PlateEnum {
+func GetByStockExchange(sc model.StockConfig) []PlateEnum {
     temp := make([]PlateEnum, 0)
     for _, r := range result {
         if r.StockExchange == sc.StockExchangeCode {
