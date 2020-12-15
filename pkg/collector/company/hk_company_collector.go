@@ -18,7 +18,7 @@ type HKCompanyCollector struct {
 }
 
 type HKResponse struct {
-    Data  HKStockList `json:"data"`
+    Data  HKStockList `json:"sample"`
     Error string      `json:"qid"`
 }
 

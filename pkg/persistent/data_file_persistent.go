@@ -3,6 +3,7 @@ package persistent
 import (
     "encoding/json"
     "errors"
+    "github.com/xiaotian/stock/pkg/config"
     "github.com/xiaotian/stock/pkg/model"
     "github.com/xiaotian/stock/pkg/tool"
     "io/ioutil"
@@ -11,17 +12,13 @@ import (
 type DataFilePreserver struct{}
 
 func (c DataFilePreserver) Save(data []model.Data) error {
-    path, err := tool.GetPath(pathName, maxLevel, maxLevel)
-    if nil != err {
-        logger.Infow("保存数据到文件,未找到配置路径", "pathName", pathName, "err", err)
-        return errors.New("保存数据到文件,未找到配置路径")
-    }
+    pathName := config.GetDataSaveFilePath()
     marshal, err := json.Marshal(data)
     if nil != err {
         logger.Infow("保存数据到文件,数据格式化异常", "pathName", pathName, "err", err)
         return errors.New("保存数据到文件,数据格式化异常")
     }
-    err = ioutil.WriteFile(path+c.getFullFileName(tool.NowDate()), marshal, 0664)
+    err = ioutil.WriteFile(pathName+c.getFullFileName(tool.NowDate()), marshal, 0664)
     if nil != err {
         logger.Infow("保存数据到文件,写入文件数据异常", "pathName", pathName, "err", err)
         return errors.New("保存数据到文件,写入文件数据异常")
@@ -30,12 +27,8 @@ func (c DataFilePreserver) Save(data []model.Data) error {
 }
 
 func (c DataFilePreserver) Read() ([]model.Data, error) {
-    path, err := tool.GetPath(pathName, maxLevel, maxLevel)
-    if nil != err {
-        logger.Infow("从文件读取数据,未找到配置路径", "pathName", pathName, "err", err)
-        return nil, errors.New("从文件读取数据,未找到配置路径")
-    }
-    file, err := ioutil.ReadFile(path + c.getFullFileName(tool.NowDate()))
+    pathName := config.GetDataSaveFilePath()
+    file, err := ioutil.ReadFile(pathName + c.getFullFileName(tool.NowDate()))
     if nil != err {
         logger.Infow("从文件读取数据,读取数据异常", "pathName", pathName, "err", err)
         return nil, errors.New("从文件读取数据,读取数据异常")

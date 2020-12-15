@@ -4,7 +4,7 @@ type Data struct {
     StockExchange int         `json:"stock_exchange"`
     Code          string      `json:"code"`
     Plate         string      `json:"plate"`
-    Data          []InnerData `json:"data"`
+    Data          []InnerData `json:"sample"`
 }
 
 func (d *Data) AddInnerData(date string, price string) {

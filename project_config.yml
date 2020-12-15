@@ -1,10 +1,10 @@
 stock:
   skipIfnodata: true
-  datasavepath: '/man/data/stock_data'
+  datasavepath: 'd:/data/'
   configs:
     - stockexchange: "SZ"
       stockexchangecode: 100
-      companyinfourl: "http://www.szse.cn/api/report/ShowReport/data?SHOWTYPE=JSON&CATALOGID=1110x"
+      companyinfourl: "http://www.szse.cn/api/report/ShowReport/sample?SHOWTYPE=JSON&CATALOGID=1110x"
       stockinfourl: "http://www.szse.cn/api/market/ssjjhq/getTimeData?random=0.20171192356322387&marketId=1"
       realtimeinfourl: "http://www.szse.cn/api/market/ssjjhq/getTimeData?random=0.20171192356322387&marketId=1"
     - stockexchange: "SH"
@@ -14,7 +14,7 @@ stock:
       realtimeinfourl: "http://yunhq.sse.com.cn:32041//v1/sh1/line/{code}?begin=0&end=-1&select=time%2Cprice%2Cvolume&_=1592540108264"
     - stockexchange: "HK"
       stockexchangecode: 160
-      companyinfourl: "https://www1.hkex.com.hk/hkexwidget/data/getequityfilter?lang=chn&token={token}&sort=5&order=0&all=1&callback=jQuery31102693108676392699_1592557858914"
+      companyinfourl: "https://www1.hkex.com.hk/hkexwidget/sample/getequityfilter?lang=chn&token={token}&sort=5&order=0&all=1&callback=jQuery31102693108676392699_1592557858914"
       stockinfourl: ""
-      realtimeinfourl: "https://www1.hkex.com.hk/hkexwidget/data/getchartdata2?hchart=1&span=0&int=0&ric={code}.HK&token={token}&callback=jQuery311028459911169776264_1592561666530"
+      realtimeinfourl: "https://www1.hkex.com.hk/hkexwidget/sample/getchartdata2?hchart=1&span=0&int=0&ric={code}.HK&token={token}&callback=jQuery311028459911169776264_1592561666530"
       tokenurl: "https://www.hkex.com.hk/?sc_lang=zh-HK"

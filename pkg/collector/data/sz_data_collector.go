@@ -19,7 +19,7 @@ type SZDataCollector struct {
 
 type Response struct {
     Code  string       `json:"code"`
-    Data  ResponseData `json:"data"`
+    Data  ResponseData `json:"sample"`
     Error string       `json:"error"`
 }
 

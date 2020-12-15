@@ -19,7 +19,7 @@ type HKDataCollector struct {
 }
 
 type HKResponse struct {
-    Data HKResponseData `json:"data"`
+    Data HKResponseData `json:"sample"`
 }
 
 type HKResponseData struct {
