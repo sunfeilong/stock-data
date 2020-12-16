@@ -4,7 +4,7 @@
 
 用于闭市之后收集当天的股票价格数据。
 
-** 配置 project_config.yml: **
+**配置 project_config.yml:**
 
 * `datasavepath`：数据文件保存路径，需要配置。
 
