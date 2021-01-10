@@ -15,7 +15,7 @@ type StockConfig struct {
 }
 
 type StockConfigs struct {
-    Configs []StockConfig
+    Configs      []StockConfig
     DataSavePath string
     SkipIfNoData bool
 }

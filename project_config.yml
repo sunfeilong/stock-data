@@ -1,5 +1,5 @@
 stock:
-  skipIfnodata: true
+  skipifnodata: true
   datasavepath: 'd:/data/'
   configs:
     - stockexchange: "SZ"
