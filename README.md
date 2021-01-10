@@ -11,7 +11,53 @@
 **数据文件命名:**
 
 * 公司数据: `company-年-月-日.json` 
+
+    ```json
+    [
+      {
+        "stock_exchange": 100,
+        "code": "000001",
+        "plate": "100",
+        "short_name": "平安银行",
+        "full_name": "平安银行股份有限公司",
+        "industry_code": "J",
+        "industry_name": "金融业"
+      },
+      ...
+     ]
+    ```
+
 * 股票数据: `data-年-月-日.json`
+
+    ```json
+    [
+      {
+        "stock_exchange": 100,
+        "code": "000001",
+        "plate": "100",
+        "data": [
+          {
+            "date": "2020-06-11 09:30",
+            "price": "13.38"
+          },
+          ...
+        ]
+      },
+      {
+        "stock_exchange": 100,
+        "code": "000002",
+        "plate": "100",
+        "data": [
+          {
+            "date": "2020-06-11 09:30",
+            "price": "13.38"
+          },
+          ...
+        ]
+      }
+      ...
+    ]
+    ```
 
 ### 注意事项
 
