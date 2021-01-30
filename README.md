@@ -59,10 +59,28 @@
     ]
     ```
 
+### 运行项目
+
+1. 直接运行
+
+    ```
+    git clone https://github.com/sunfeilong/stock-data.git
+    cd stock-data
+    go run stock_data.go
+    ```
+    
+1. 打包之后运行 
+
+    ```
+    git clone https://github.com/sunfeilong/stock-data.git
+    cd stock-data
+    go build
+    ./stock
+    ```
+
 ### 注意事项
 
 为了不影响数据源网站正常运行，使用时请不要删除限速的代码。
-
 
 ## 功能列表
 
