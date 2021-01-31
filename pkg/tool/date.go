@@ -2,16 +2,18 @@ package tool
 
 import "time"
 
+var GMT = time.FixedZone("GMT", +8*60*60)
+
 func NowDateTime() string {
-    return DateTime(time.Now())
+    return DateTime(time.Now().In(GMT))
 }
 
 func NowDate() string {
-    return Date(time.Now())
+    return Date(time.Now().In(GMT))
 }
 
 func NowTime() string {
-    return Time(time.Now())
+    return Time(time.Now().In(GMT))
 }
 
 func DateTime(time time.Time) string {
@@ -27,29 +29,30 @@ func Time(time time.Time) string {
 }
 
 func NowDateTimeWithLabel() (string, string) {
-    return "date", DateTime(time.Now())
+    return "date", DateTime(time.Now().In(GMT))
 }
 
 func ParseDateTime(timeStr string) time.Time {
-    result, err := time.Parse("2006-01-02 15:04:05", timeStr)
+    result, err := time.ParseInLocation("2006-01-02 15:04:05", timeStr, GMT)
     if nil != err {
         panic(err)
     }
-    return result.In(time.Local)
+    return result
 }
 
 func ParseDate(str string) time.Time {
-    result, err := time.Parse("2006-01-02", str)
+    result, err := time.ParseInLocation("2006-01-02", str, GMT)
     if nil != err {
         panic(err)
     }
-    return result.In(time.Local)
+    return result
 }
 
 func ParseTime(str string) time.Time {
-    result, err := time.Parse("15:04:05", str)
+    result, err := time.ParseInLocation("15:04:05", str, GMT)
+
     if nil != err {
         panic(err)
     }
-    return result.In(time.Local)
+    return result
 }
