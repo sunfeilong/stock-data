@@ -3,7 +3,7 @@ stock:
   # windows
   # datasavepath: 'd:/data/'
   # linux
-  datasavepath: '/home'
+  datasavepath: '/home/'
   configs:
     - stockexchange: "SZ"
       stockexchangecode: 100
