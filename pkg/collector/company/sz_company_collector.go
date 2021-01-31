@@ -22,7 +22,7 @@ type SZCompanyCollector struct {
 }
 
 type Response struct {
-    Data  []ResponseData `json:"sample"`
+    Data  []ResponseData `json:"data"`
     Error string         `json:"error"`
 }
 
