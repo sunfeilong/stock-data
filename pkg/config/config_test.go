@@ -15,8 +15,7 @@ func TestGetStockExchangeConfig(t *testing.T) {
     assert.Equal(t, "HK", HKConfig.StockExchange, "配置信息不正确")
 
     filePath := GetDataSaveFilePath()
-    assert.Equal(t, filePath, "/man/sample/stock_data")
-
+    assert.NotEmpty(t, filePath)
 
     skipNoData := SkipNoData()
     assert.Equal(t, skipNoData, true)
