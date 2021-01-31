@@ -17,4 +17,4 @@ stock:
       companyinfourl: "https://www1.hkex.com.hk/hkexwidget/data/getequityfilter?lang=chn&token={token}&sort=5&order=0&all=1&callback=jQuery31102693108676392699_1592557858914"
       stockinfourl: ""
       realtimeinfourl: "https://www1.hkex.com.hk/hkexwidget/data/getchartdata2?hchart=1&span=0&int=0&ric={code}.HK&token={token}&callback=jQuery311028459911169776264_1592561666530"
-      tokenurl: "https://www.hkex.com.hk/?sc_lang=zh-HK"
+      tokenurl: "https://www.hkex.com.hk/Market-Data/Securities-Prices/Equities?sc_lang=zh-HK"
