@@ -9,7 +9,7 @@ import (
     "testing"
 )
 
-func TestFetchAll(t *testing.T) {
+func TestFetchOne(t *testing.T) {
 
     conf := config.GetStockConfig(enums.SZ)
     company := &[]model.Company{}

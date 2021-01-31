@@ -9,7 +9,7 @@ import (
     "testing"
 )
 
-func TestHKFetchAll(t *testing.T) {
+func TestHKFetchOne(t *testing.T) {
 
     conf := config.GetStockConfig(enums.HK)
     company := &[]model.Company{}
