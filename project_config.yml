@@ -1,6 +1,9 @@
 stock:
   skipifnodata: true
-  datasavepath: 'd:/data/'
+  # windows
+  # datasavepath: 'd:/data/'
+  # linux
+  datasavepath: '/home'
   configs:
     - stockexchange: "SZ"
       stockexchangecode: 100
