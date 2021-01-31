@@ -61,6 +61,13 @@
 
 ### 运行项目
 
+需要先修改 `project_config.yml` 中的 `datasavepath` 为实际路径。
+
+```
+Windows: datasavepath: 'd:/data/'
+Linux: datasavepath: '/home/xaotian/data'
+```
+
 1. 直接运行
 
     ```
@@ -69,7 +76,7 @@
     go run stock_data.go
     ```
     
-1. 打包之后运行 
+2. 打包之后运行 
 
     ```
     git clone https://github.com/sunfeilong/stock-data.git
