@@ -65,7 +65,7 @@
 
 ```
 Windows: datasavepath: 'd:/data/'
-Linux: datasavepath: '/home/xaotian/data'
+Linux: datasavepath: '/home/xiaotian/data'
 ```
 
 1. 直接运行
