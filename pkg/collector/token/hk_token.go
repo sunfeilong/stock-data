@@ -36,5 +36,5 @@ func GetHKToken(url string) string {
             }
         }
     }
-    return ""
+    return "evLtsLsBNAUVTPxtGqVeG%2b7WGQZvWXgY%2fZySCCw8oO1jP4XMmn%2bQeF1Pv1jcyjpz"
 }

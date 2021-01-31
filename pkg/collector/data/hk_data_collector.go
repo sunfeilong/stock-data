@@ -19,7 +19,7 @@ type HKDataCollector struct {
 }
 
 type HKResponse struct {
-    Data HKResponseData `json:"sample"`
+    Data HKResponseData `json:"data"`
 }
 
 type HKResponseData struct {
@@ -97,10 +97,13 @@ func HKGetData(company model.Company, config model.StockConfig, hkToken string) 
 
 func HKCopyData(data *model.Data, response *HKResponse) {
     for _, p := range response.Data.DataList {
-        if p[1] == nil{
+        if p[1] == nil {
             continue
         }
         unixTime := time.Unix(int64(p[0].(float64))/1000, 0).Format("2006-01-02 15:04")
+        if p[4] == nil {
+            return
+        }
         data.AddInnerData(unixTime, fmt.Sprintf("%.2f", p[4]))
     }
 }
