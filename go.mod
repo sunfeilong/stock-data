@@ -1,6 +1,6 @@
 module github.com/xiaotian/stock
 
-go 1.15
+go 1.16
 
 require (
 	github.com/bittygarden/lilac v1.1.7
@@ -20,5 +20,5 @@ require (
 	golang.org/x/text v0.3.5 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
-	gopkg.in/yaml.v2 v2.4.0 // indirect
+	gopkg.in/yaml.v2 v2.2.8 // indirect
 )
